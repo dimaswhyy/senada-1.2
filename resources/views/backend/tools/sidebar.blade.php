@@ -23,7 +23,7 @@
         </a>
       </li>
       {{-- Super Admin --}}
-      @if (Str::length(Auth::guard('account_yayasan')->user()) > 0)
+      {{-- @if (Str::length(Auth::guard('account_yayasan')->user()) > 0)
       @if (Auth::guard('account_yayasan')->user()->role_id == 1)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Yayasan</span>
@@ -53,9 +53,9 @@
         </ul>
       </li>
       @endif
-      @endif
+      @endif --}}
       {{-- Administrasi --}}
-      @if (Str::length(Auth::guard('unit_account')->user()) > 0)
+      {{-- @if (Str::length(Auth::guard('unit_account')->user()) > 0)
       @if (Auth::guard('unit_account')->user()->role_id == 2)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administrator</span>
@@ -90,10 +90,10 @@
         </ul>
       </li>
       @endif
-      @endif
+      @endif --}}
       {{-- Keuangan --}}
-      @if (Str::length(Auth::guard('unit_account')->user()) > 0)
-      @if (Auth::guard('unit_account')->user()->role_id == 3)
+      {{-- @if (Str::length(Auth::guard('unit_account')->user()) > 0)
+      @if (Auth::guard('unit_account')->user()->role_id == 3) --}}
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Keuangan</span>
       </li>
@@ -104,18 +104,18 @@
         </a>
         <ul class="menu-sub">
           <li class="menu-item {{Request::is('jenistransaksi')?'active':''}}">
-            <a href="{{route('jenistransaksi.index')}}" class="menu-link">
+            <a href={{ route('jenis-transaksi.index') }}" class="menu-link">
               <div data-i18n="Account">Jenis Transaksi</div>
             </a>
           </li>
           <li class="menu-item {{Request::is('pembayaran')?'active':''}}">
-            <a href="{{route('pembayaran.index')}}" class="menu-link">
+            <a href="#" class="menu-link">
               <div data-i18n="Account">Pembayaran</div>
             </a>
           </li>
         </ul>
       </li>
-      <li class="menu-item">
+      {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dollar"></i>
           <div data-i18n="Account Settings">Tagihan</div>
@@ -137,24 +137,24 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> --}}
       <li class="menu-item">
-        <a href="index.html" class="menu-link">
+        <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
           <div data-i18n="Analytics">Piutang</div>
         </a>
       </li>
       <li class="menu-item {{Request::is('laporan')?'active':''}}">
-        <a href="{{route('laporan.index')}}" class="menu-link">
+        <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-report"></i>
           <div data-i18n="Analytics">Laporan</div>
         </a>
       </li>
-      @endif
-      @endif
+      {{-- @endif
+      @endif --}}
 
       <!-- Siswa -->
-      @if (Str::length(Auth::guard('user')->user()) > 0)
+      {{-- @if (Str::length(Auth::guard('user')->user()) > 0)
       @if (Auth::guard('user')->user()->role_id == 6)
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Siswa</span></li>
       <!-- Profil -->
@@ -170,7 +170,7 @@
           <i class="menu-icon tf-icons bx bx-wallet-alt"></i>
           <div data-i18n="Basic">Pembayaran</div>
         </a>
-      </li>
+      </li> --}}
       <!-- Pembayaran -->
       {{-- <li class="menu-item">
         <a href="cards-basic.html" class="menu-link">
@@ -282,7 +282,7 @@
           </li>
         </ul>
       </li> --}}
-      @endif
-      @endif
+      {{-- @endif
+      @endif --}}
     </ul>
   </aside>

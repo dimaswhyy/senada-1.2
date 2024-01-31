@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                    {{-- <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                     <small class="text-muted">
                                         @if (auth()->user()->role_id == 1)
                                             <span>Yayasan</span>
@@ -52,7 +52,7 @@
                                         @else
                                             <span>Siswa</span>
                                         @endif
-                                    </small>
+                                    </small> --}}
                                 </div>
                             </div>
                         </a>
@@ -87,7 +87,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        {{-- <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
                             <i class="bx bx-power-off me-2"></i>
@@ -95,7 +95,7 @@
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
-                        </form>
+                        </form> --}}
                     </li>
                 </ul>
             </li>

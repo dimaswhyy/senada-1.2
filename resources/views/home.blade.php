@@ -242,7 +242,7 @@
                                         kapal yang bisa berlayar di atas daratan kering.</p>
 
                                     <div class="class">
-                                        <a href="#" class="btn btn-primary">Masuk Sekarang</a>
+                                        <a href={{ route('dashboard.index') }}" class="btn btn-primary">Masuk Sekarang</a>
                                         {{-- {{route('login')}} --}}
                                     </div>
                                 </div>
@@ -330,13 +330,11 @@
                             class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0">
                                 ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
+                                2023
                                 , made with Team IT Al Manar.
                                 <a href="https://almanar.sch.id" target="_blank" class="footer-link fw-bolder">Sistem
                                     Infromasi Akademik Pendidikan Al Manar</a>
-                                1.0
+                                1.3
                             </div>
                         </div>
                     </footer>
