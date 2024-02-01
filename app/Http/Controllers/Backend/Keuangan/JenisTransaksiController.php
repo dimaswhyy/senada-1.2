@@ -51,10 +51,11 @@ class JenisTransaksiController extends Controller
                         $dropBtn ='<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href='.route("jenis-transaksi.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <form action="' . route('jenis-transaksi.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
+                          
                         </div>
-                        </div>';
+                        </div>
+                        <a class="dropdown-item" href='.route("jenis-transaksi.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
+                          <form action="' . route('jenis-transaksi.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>';
                         $btn = $dropBtn;
                         return $btn;
                     })
@@ -117,6 +118,8 @@ class JenisTransaksiController extends Controller
     public function edit(string $id)
     {
         //
+        $jenistransaksis = JenisTransaksi::find($id);
+        return view('backend.senada.keuangan.jenis_transaksi.edit', compact('jenistransaksis'));
     }
 
     /**
@@ -125,6 +128,7 @@ class JenisTransaksiController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        
     }
 
     /**
