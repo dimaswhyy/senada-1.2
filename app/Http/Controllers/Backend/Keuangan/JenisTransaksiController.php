@@ -128,7 +128,22 @@ class JenisTransaksiController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        
+        $jenistransaksis = JenisTransaksi::findOrFail($id);
+
+        $jenistransaksis->update([
+            'account_id'     => $request->account_id,
+            'study_group_id' => $request->study_group_id,
+            'transaction_type'     => $request->transaction_type,
+            'transaction_fees'     => $request->transaction_fees
+        ]);
+
+        if($jenistransaksis){
+            //redirect dengan pesan sukses
+            return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 
     /**
