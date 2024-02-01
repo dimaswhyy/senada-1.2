@@ -45,8 +45,9 @@
     {{-- DataTables --}}
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/backend/vendor/fonts/boxicons.css') }}" />
@@ -218,48 +219,48 @@
 
     {{-- Script List Data Table --}}
     <script type="text/javascript">
-      $(function() {
+        $(function() {
 
-          // Keuangan List Index
-          // Datatable Jenis Transaksi
-          var table = $('.data-table-jenis-transaksi').DataTable({
-              processing: true,
-              serverSide: true,
-              ajax: {
-                  url: "{{ route('jenis-transaksi.index') }}",
-                  data: function(d) {
-                      d.name = $('.searchName').val(),
-                          d.search = $('input[type="search"]').val()
-                  }
-              },
-              columns: [{
-                      data: 'DT_RowIndex',
-                      name: 'DT_RowIndex'
-                  },
-                  {
-                      data: 'study_group_id',
-                      name: 'study_group_id'
-                  },
-                  {
-                      data: 'transaction_type',
-                      name: 'transaction_type'
-                  },
-                  {
-                      data: 'transaction_fees',
-                      name: 'transaction_fees'
-                  },
-                  {
-                      data: 'action',
-                      name: 'action',
-                      orderable: false,
-                      searchable: false
-                  },
-              ]
-          });
+            // Keuangan List Index
+            // Datatable Jenis Transaksi
+            var table = $('.data-table-jenis-transaksi').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('jenis-transaksi.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'study_group_id',
+                        name: 'study_group_id'
+                    },
+                    {
+                        data: 'transaction_type',
+                        name: 'transaction_type'
+                    },
+                    {
+                        data: 'transaction_fees',
+                        name: 'transaction_fees'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
 
-          $(".searchName").keyup(function() {
-              table.draw();
-          });
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
 
 
 

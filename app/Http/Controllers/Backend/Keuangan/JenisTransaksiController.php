@@ -23,44 +23,42 @@ class JenisTransaksiController extends Controller
             // dd($data);
 
             return datatables::of($data)
-                    ->addIndexColumn()
-                    ->filter(function ($instance) use ($request) {
+                ->addIndexColumn()
+                ->filter(function ($instance) use ($request) {
 
-                        if (!empty($request->get('transaction_type'))) {
-                            $instance->collection = $instance->collection->filter(function ($row) use ($request) {
-                                return Str::contains($row['transaction_type'], $request->get('transaction_type')) ? true : false;
-                            });
-                        }
+                    if (!empty($request->get('transaction_type'))) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                            return Str::contains($row['transaction_type'], $request->get('transaction_type')) ? true : false;
+                        });
+                    }
 
-                        if (!empty($request->get('search'))) {
-                            $instance->collection = $instance->collection->filter(function ($row) use ($request) {
+                    if (!empty($request->get('search'))) {
+                        $instance->collection = $instance->collection->filter(function ($row) use ($request) {
 
 
-                                if (Str::contains(Str::lower($row['transaction_type']), Str::lower($request->get('search')))){
-                                    return true;
-                                }else if (Str::contains(Str::lower($row['transaction_type']), Str::lower($request->get('search')))) {
-                                    return true;
-                                }
+                            if (Str::contains(Str::lower($row['transaction_type']), Str::lower($request->get('search')))) {
+                                return true;
+                            } else if (Str::contains(Str::lower($row['transaction_type']), Str::lower($request->get('search')))) {
+                                return true;
+                            }
 
-                                return false;
-                            });
-                        }
-
-                    })
-                    ->addColumn('action', function($row){
-                        $dropBtn ='<div class="dropdown">
+                            return false;
+                        });
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    $dropBtn ='<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          
+                          <a class="dropdown-item" href='.route("jenis-transaksi.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
+                          <form action="' . route('jenis-transaksi.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
-                        </div>
-                        <a class="dropdown-item" href='.route("jenis-transaksi.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <form action="' . route('jenis-transaksi.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>';
-                        $btn = $dropBtn;
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                        </div>';
+                    $btn = $dropBtn;
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('backend.senada.keuangan.jenis_transaksi.list');
     }
@@ -80,7 +78,7 @@ class JenisTransaksiController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
+        $this->validate($request, [
             'account_id'   => 'required',
             'study_group_id' => 'required',
             'transaction_type'     => 'required',
@@ -95,10 +93,10 @@ class JenisTransaksiController extends Controller
             'transaction_fees'     => $request->transaction_fees
         ]);
 
-        if($jenistransaksis){
+        if ($jenistransaksis) {
             //redirect dengan pesan sukses
             return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('jenis-transaksi.add')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -137,10 +135,10 @@ class JenisTransaksiController extends Controller
             'transaction_fees'     => $request->transaction_fees
         ]);
 
-        if($jenistransaksis){
+        if ($jenistransaksis) {
             //redirect dengan pesan sukses
             return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -155,12 +153,12 @@ class JenisTransaksiController extends Controller
         $jenistransaksis = JenisTransaksi::findOrFail($id);
 
         $jenistransaksis->delete();
-        if($jenistransaksis){
+        if ($jenistransaksis) {
             //redirect dengan pesan sukses
-        return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Dihapus!']);
-        }else{
+            return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
             //redirect dengan pesan error
-        return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Dihapus!']);
+            return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
 }
