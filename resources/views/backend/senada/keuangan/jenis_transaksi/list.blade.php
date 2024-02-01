@@ -9,8 +9,7 @@
         <div class="card-header">
             <h5>Jenis Transaksi</h5>
 
-            <a href="" class="btn btn-sm btn-primary">Tambah</a>
-            {{-- {{route('jenistransaksi.create')}} --}}
+            <a href="{{ route('jenis-transaksi.create') }}" class="btn btn-sm btn-primary">Tambah</a>
             <div class="card-datatable table">
                 <div class="card-datatable table-responsive text-nowrap">
                     <table class="dt-scrollableTable table data-table-jenis-transaksi">
@@ -27,4 +26,5 @@
                 </div>
             </div>
         </div>
+    </div>
     @endsection

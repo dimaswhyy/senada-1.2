@@ -43,12 +43,7 @@
     />
 
     {{-- DataTables --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" /> --}}
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
-    {{-- <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
-    {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
@@ -128,7 +123,7 @@
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/backend/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/libs/popper/popper.js') }}"></script>
-    {{-- <script src="{{asset('assets/backend/vendor/js/bootstrap.js')}}"></script> --}}
+    <script src="{{ asset('assets/backend/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
     <script src="{{ asset('assets/backend/vendor/js/menu.js') }}"></script>
@@ -149,11 +144,13 @@
     <!-- Datatables -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> --}}
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 
 @stack('jsAddmultiple')
 
@@ -217,7 +214,55 @@
 
     </script> --}}
 
+    {{-- Script List Data Table --}}
+    <script type="text/javascript">
+      $(function() {
 
+          // Keuangan List Index
+          // Datatable Jenis Transaksi
+          var table = $('.data-table-jenis-transaksi').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: {
+                  url: "{{ route('jenis-transaksi.index') }}",
+                  data: function(d) {
+                      d.name = $('.searchName').val(),
+                          d.search = $('input[type="search"]').val()
+                  }
+              },
+              columns: [{
+                      data: 'DT_RowIndex',
+                      name: 'DT_RowIndex'
+                  },
+                  {
+                      data: 'study_group_id',
+                      name: 'study_group_id'
+                  },
+                  {
+                      data: 'transaction_type',
+                      name: 'transaction_type'
+                  },
+                  {
+                      data: 'transaction_fees',
+                      name: 'transaction_fees'
+                  },
+                  {
+                      data: 'action',
+                      name: 'action',
+                      orderable: false,
+                      searchable: false
+                  },
+              ]
+          });
+
+          $(".searchName").keyup(function() {
+              table.draw();
+          });
+
+
+
+        });
+    </script>
 
     
     
