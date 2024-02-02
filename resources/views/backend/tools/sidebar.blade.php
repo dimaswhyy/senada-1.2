@@ -72,8 +72,8 @@
               <div data-i18n="Notifications">Data Peserta Didik</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
+          <li class="menu-item {{Request::is('rombongan-belajar')?'active':''}}">
+            <a href="{{ route('rombongan-belajar.index') }}" class="menu-link">
               <div data-i18n="Notifications">Rombongan Belajar</div>
             </a>
           </li>

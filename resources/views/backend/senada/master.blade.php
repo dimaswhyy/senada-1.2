@@ -311,6 +311,38 @@
                 table.draw();
             });
 
+            // Datatable Peserta Didik
+            var table = $('.data-table-rombongan-belajar').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('rombongan-belajar.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'study_group',
+                        name: 'study_group'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
+
         });
     </script>
   
