@@ -94,7 +94,7 @@
           <div data-i18n="Account Settings">Transaksi</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{Request::is('jenistransaksi')?'active':''}}">
+          <li class="menu-item {{Request::is('jenis-transaksi')?'active':''}}">
             <a href="{{ route('jenis-transaksi.index') }}" class="menu-link">
               <div data-i18n="Account">Jenis Transaksi</div>
             </a>

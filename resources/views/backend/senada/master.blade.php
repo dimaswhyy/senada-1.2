@@ -262,7 +262,54 @@
                 table.draw();
             });
 
+            // Administrator atau Tata Usaha
+            // Datatable Peserta Didik
+            var table = $('.data-table-peserta-didik').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('data-peserta-didik.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'information',
+                        name: 'information',
+                        render: function(data, type, row, meta) {
+                            if (data == 'Aktif') {
+                                console.log(data);
+                                return '<span class="badge bg-label-success me-1">Aktif</span>';
+                            } else {
+                                return '<span class="badge bg-label-danger me-1">Tidak Aktif</span>';
+                            }
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
 
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
 
         });
     </script>
