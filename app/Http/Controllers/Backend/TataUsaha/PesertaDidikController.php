@@ -126,6 +126,8 @@ class PesertaDidikController extends Controller
     public function edit(string $id)
     {
         //
+        $pesertadidiks = PesertaDidik::find($id);
+        return view('backend.senada.tatausaha.peserta_didik.edit', compact('pesertadidiks'));
     }
 
     /**
@@ -134,6 +136,25 @@ class PesertaDidikController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $pesertadidiks = PesertaDidik::findOrFail($id);
+
+        $pesertadidiks->update([
+            'account_id'     => $request->account_id,
+            'name'     => $request->name,
+            'gender'     => $request->gender,
+            'email'     => $request->email,
+            'password'     => Hash::make($request->password),
+            'role_id'     => $request->role_id,
+            'information'     => $request->information
+        ]);
+
+        if ($pesertadidiks) {
+            //redirect dengan pesan sukses
+            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 
     /**
@@ -142,5 +163,15 @@ class PesertaDidikController extends Controller
     public function destroy(string $id)
     {
         //
+        $pesertadidiks = PesertaDidik::findorfail($id);
+        $pesertadidiks->delete();
+        
+        if($pesertadidiks){
+            //redirect dengan pesan sukses
+            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 }
