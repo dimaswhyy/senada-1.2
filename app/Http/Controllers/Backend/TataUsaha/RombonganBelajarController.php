@@ -52,8 +52,8 @@ class RombonganBelajarController extends Controller
                     $dropBtn ='<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href='.route("rombongan-beajar.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <form action="' . route('rombongan-beajar.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
+                          <a class="dropdown-item" href='.route("rombongan-belajar.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
+                          <form action="' . route('rombongan-belajar.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
                     $btn = $dropBtn;
@@ -80,6 +80,26 @@ class RombonganBelajarController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'account_id'   => 'required',
+            'study_group' => 'required'
+
+        ]);
+
+        $rombonganbelajars = RombonganBelajar::create([
+            'id'    => Str::uuid(),
+            'account_id'     => $request->account_id,
+            'study_group'     => $request->study_group
+
+        ]);
+
+        if ($rombonganbelajars) {
+            //redirect dengan pesan sukses
+            return redirect()->route('rombongan-belajar.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('rombongan-belajar.add')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 
     /**
@@ -96,6 +116,8 @@ class RombonganBelajarController extends Controller
     public function edit(string $id)
     {
         //
+        $rombonganbelajars = RombonganBelajar::find($id);
+        return view('backend.senada.tatausaha.rombongan_belajar.edit', compact('rombonganbelajars'));
     }
 
     /**
@@ -104,6 +126,20 @@ class RombonganBelajarController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $rombonganbelajars = RombonganBelajar::findOrFail($id);
+
+        $rombonganbelajars->update([
+            'account_id'     => $request->account_id,
+            'study_group'     => $request->study_group
+        ]);
+
+        if ($rombonganbelajars) {
+            //redirect dengan pesan sukses
+            return redirect()->route('rombongan-belajar.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('rombongan-belajar.edit')->with(['error' => 'Data Gagal Diubah!']);
+        }
     }
 
     /**
@@ -112,5 +148,15 @@ class RombonganBelajarController extends Controller
     public function destroy(string $id)
     {
         //
+        $rombonganbelajars = RombonganBelajar::findorfail($id);
+        $rombonganbelajars->delete();
+        
+        if($rombonganbelajars){
+            //redirect dengan pesan sukses
+            return redirect()->route('rombongan-belajar.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('rombongan-belajar.edit')->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
 }

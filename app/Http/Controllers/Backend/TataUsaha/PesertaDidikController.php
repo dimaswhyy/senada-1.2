@@ -150,10 +150,10 @@ class PesertaDidikController extends Controller
 
         if ($pesertadidiks) {
             //redirect dengan pesan sukses
-            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Diubah!']);
         } else {
             //redirect dengan pesan error
-            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Diubah!']);
         }
     }
 
@@ -168,10 +168,10 @@ class PesertaDidikController extends Controller
         
         if($pesertadidiks){
             //redirect dengan pesan sukses
-            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            return redirect()->route('data-peserta-didik.index')->with(['success' => 'Data Berhasil Dihapus!']);
         }else{
             //redirect dengan pesan error
-            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect()->route('data-peserta-didik.edit')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
 }

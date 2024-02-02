@@ -137,10 +137,10 @@ class JenisTransaksiController extends Controller
 
         if ($jenistransaksis) {
             //redirect dengan pesan sukses
-            return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            return redirect()->route('jenis-transaksi.index')->with(['success' => 'Data Berhasil Diubah!']);
         } else {
             //redirect dengan pesan error
-            return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect()->route('jenis-transaksi.edit')->with(['error' => 'Data Gagal Diubah!']);
         }
     }
 
