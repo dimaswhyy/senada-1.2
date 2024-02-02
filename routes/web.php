@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,10 @@ Route::get('/', function () {
 });
 
 Route::resource('/dashboard', DashboardController::class);
+
+//Tata Usaha
+Route::resource('/data-peserta-didik', PesertaDidikController::class);
+
+// Keuangan
 Route::resource('/jenis-transaksi', JenisTransaksiController::class);
 

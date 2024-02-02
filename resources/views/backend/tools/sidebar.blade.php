@@ -54,17 +54,12 @@
       </li>
       @endif
       @endif --}}
+
       {{-- Administrasi --}}
       {{-- @if (Str::length(Auth::guard('unit_account')->user()) > 0)
-      @if (Auth::guard('unit_account')->user()->role_id == 2)
+      @if (Auth::guard('unit_account')->user()->role_id == 2) --}}
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Administrator</span>
-      </li>
-      <li class="menu-item {{Request::is('profilsekolah')?'active':''}}">
-        <a href="{{route('profilsekolah.index')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-school"></i>
-          <div data-i18n="Analytics">Profil Sekolah</div>
-        </a>
+        <span class="menu-header-text">Tata Usaha</span>
       </li>
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -72,25 +67,21 @@
           <div data-i18n="Account Settings">Kelola</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{Request::is('guru')?'active':''}}">
-            <a href="{{route('guru.index')}}" class="menu-link">
-              <div data-i18n="Account">Data Guru</div>
+          <li class="menu-item {{Request::is('data-peserta-didik')?'active':''}}">
+            <a href="{{ route('data-peserta-didik.index') }}" class="menu-link">
+              <div data-i18n="Notifications">Data Peserta Didik</div>
             </a>
           </li>
-          <li class="menu-item {{Request::is('siswa')?'active':''}}">
-            <a href="{{route('siswa.index')}}" class="menu-link">
-              <div data-i18n="Notifications">Data Siswa</div>
-            </a>
-          </li>
-          <li class="menu-item {{Request::is('mapping')?'active':''}}">
-            <a href="{{route('mapping.index')}}" class="menu-link">
-              <div data-i18n="Notifications">Mapping Kelas</div>
+          <li class="menu-item">
+            <a href="#" class="menu-link">
+              <div data-i18n="Notifications">Rombongan Belajar</div>
             </a>
           </li>
         </ul>
       </li>
-      @endif
+      {{-- @endif
       @endif --}}
+
       {{-- Keuangan --}}
       {{-- @if (Str::length(Auth::guard('unit_account')->user()) > 0)
       @if (Auth::guard('unit_account')->user()->role_id == 3) --}}
@@ -114,35 +105,6 @@
             </a>
           </li>
         </ul>
-      </li>
-      {{-- <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-dollar"></i>
-          <div data-i18n="Account Settings">Tagihan</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item {{Request::is('spp')?'active':''}}">
-            <a href="" class="menu-link">
-              <div data-i18n="Account">SPP</div>
-            </a>
-          </li>
-          <li class="menu-item {{Request::is('ekskul')?'active':''}}">
-            <a href="" class="menu-link">
-              <div data-i18n="Account">Ekskul</div>
-            </a>
-          </li>
-          <li class="menu-item {{Request::is('cathering')?'active':''}}">
-            <a href="" class="menu-link">
-              <div data-i18n="Notifications">Cathering</div>
-            </a>
-          </li>
-        </ul>
-      </li> --}}
-      <li class="menu-item">
-        <a href="#" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
-          <div data-i18n="Analytics">Piutang</div>
-        </a>
       </li>
       <li class="menu-item {{Request::is('laporan')?'active':''}}">
         <a href="#" class="menu-link">
