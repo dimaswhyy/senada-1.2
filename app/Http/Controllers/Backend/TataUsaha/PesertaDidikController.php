@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\TataUsaha;
 use App\Http\Controllers\Controller;
 use App\Models\PesertaDidik;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +53,7 @@ class PesertaDidikController extends Controller
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href='.route("data-peserta-didik.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <form action="' . route('data-peserta-didik.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
+                          <form action="' . route('data-peserta-didik.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" data-confirm-delete="true"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
                     $btn = $dropBtn;
@@ -62,6 +62,10 @@ class PesertaDidikController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
+        $title = 'Hapus';
+        $text = "Yakin ingin dihapus ?";
+        confirmDelete($title, $text);
         return view('backend.senada.tatausaha.peserta_didik.list');
     }
 
