@@ -238,8 +238,8 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'study_group_id',
-                        name: 'study_group_id'
+                        data: 'study_group',
+                        name: 'rombongan_belajars.study_group'
                     },
                     {
                         data: 'transaction_type',
@@ -248,6 +248,69 @@
                     {
                         data: 'transaction_fees',
                         name: 'transaction_fees'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
+
+            // Datatable Pembayaran
+            var table = $('.data-table-pembayaran').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('pembayaran.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'transaction_order',
+                        name: 'transaction_order'
+                    },
+                    {
+                        data: 'student_id',
+                        name: 'student_id'
+                    },
+                    {
+                        data: 'class_id',
+                        name: 'class_id'
+                    },
+                    {
+                        data: 'transaction_type',
+                        name: 'transaction_type'
+                    },
+                    
+                    {
+                        data: 'transaction_via',
+                        name: 'transaction_via'
+                    },
+                    {
+                        data: 'information',
+                        name: 'information',
+                        render: function(data, type, row, meta) {
+                            if (data == 'Disetujui') {
+                                console.log(data);
+                                return '<span class="badge bg-label-success me-1">Disetujui</span>';
+                            } else if {
+                                return '<span class="badge bg-label-warning me-1">Dalam Antrian</span>';
+                            } else {
+                                return '<span class="badge bg-label-danger me-1">Ditolak</span>';
+                            }
+                        }
                     },
                     {
                         data: 'action',

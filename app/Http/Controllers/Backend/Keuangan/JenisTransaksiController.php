@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Backend\Keuangan;
 
 use App\Http\Controllers\Controller;
 use App\Models\JenisTransaksi;
+use App\Models\RombonganBelajar;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class JenisTransaksiController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = JenisTransaksi::latest()->get();
+            $data = JenisTransaksi::leftjoin('rombongan_belajars', 'jenis_transaksis.study_group_id', '=', 'rombongan_belajars.id')->select('jenis_transaksis.id','jenis_transaksis.study_group_id','rombongan_belajars.study_group', 'jenis_transaksis.*', 'jenis_transaksis.created_at')->latest()->get();
             // dd($data);
 
             return datatables::of($data)
@@ -69,7 +70,8 @@ class JenisTransaksiController extends Controller
     public function create()
     {
         //
-        return view('backend.senada.keuangan.jenis_transaksi.add');
+        $getRombel = RombonganBelajar::all();
+        return view('backend.senada.keuangan.jenis_transaksi.add', compact('getRombel'));
     }
 
     /**
@@ -116,8 +118,9 @@ class JenisTransaksiController extends Controller
     public function edit(string $id)
     {
         //
+        $getRombel = RombonganBelajar::all();
         $jenistransaksis = JenisTransaksi::find($id);
-        return view('backend.senada.keuangan.jenis_transaksi.edit', compact('jenistransaksis'));
+        return view('backend.senada.keuangan.jenis_transaksi.edit', compact('jenistransaksis','getRombel'));
     }
 
     /**

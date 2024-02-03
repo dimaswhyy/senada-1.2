@@ -94,7 +94,6 @@ class RombonganBelajarController extends Controller
             'id'    => Str::uuid(),
             'account_id'     => $request->account_id,
             'study_group'     => $request->study_group
-
         ]);
 
         if ($rombonganbelajars) {

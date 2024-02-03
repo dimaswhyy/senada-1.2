@@ -100,7 +100,7 @@
             </a>
           </li>
           <li class="menu-item {{Request::is('pembayaran')?'active':''}}">
-            <a href="#" class="menu-link">
+            <a href="{{ route('pembayaran.index') }}" class="menu-link">
               <div data-i18n="Account">Pembayaran</div>
             </a>
           </li>

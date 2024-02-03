@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('transaction_year');
             $table->string('transaction_fee');
             $table->string('transaction_total');
+            $table->string('transaction_via');
             $table->longText('transfer_evidence');
             $table->string('information');
             $table->timestamps();

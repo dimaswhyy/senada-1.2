@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\Keuangan\PembayaranController;
 use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
 use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,5 @@ Route::resource('/rombongan-belajar', RombonganBelajarController::class);
 
 // Keuangan
 Route::resource('/jenis-transaksi', JenisTransaksiController::class);
+Route::resource('/pembayaran', PembayaranController::class);
 

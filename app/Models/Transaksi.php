@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model
 {
+    use HasFactory;
+
     public $incrementing = false;
 
-    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +29,7 @@ class Transaksi extends Model
         'transaction_year',
         'transaction_fee',
         'transaction_total',
+        'transaction_via',
         'transfer_evidence',
         'information'
     ];

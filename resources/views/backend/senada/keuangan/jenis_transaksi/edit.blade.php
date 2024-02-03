@@ -20,10 +20,9 @@
                         <div class="form-group mb-3">
                             <label for="study_group_id">Rombongan Belajar</label>
                             <select name="study_group_id" class="form-control" id="study_group_id">
-                                <option>1A</option>
-                                {{-- @foreach ($getRombel as $item)
-                                <option value="{{$item->id}}" {{$jenistransaksis->study_group_id == $item->id ? 'selected':''}}>{{$item->rombongan_belajar}}</option>
-                                @endforeach --}}
+                                @foreach ($getRombel as $item)
+                                <option value="{{$item->id}}" {{$jenistransaksis->study_group_id == $item->id ? 'selected':''}}>{{$item->study_group}}</option>
+                                @endforeach
                             </select>
                             @error('study_group_id')
                                 <div class="alert alert-danger mt-2">
