@@ -305,7 +305,7 @@
                             if (data == 'Disetujui') {
                                 console.log(data);
                                 return '<span class="badge bg-label-success me-1">Disetujui</span>';
-                            } else if {
+                            } else if (data == 'Dalam Antrian'){
                                 return '<span class="badge bg-label-warning me-1">Dalam Antrian</span>';
                             } else {
                                 return '<span class="badge bg-label-danger me-1">Ditolak</span>';

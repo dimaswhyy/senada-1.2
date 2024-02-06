@@ -71,4 +71,10 @@ class PembayaranController extends Controller
     {
         //
     }
+
+    public function getJenisTransaksiList($id)
+    {
+        $listJenis = JenisTransaksi::where('study_group_id',$id)->get();
+        return response()->json($listJenis);
+    }
 }

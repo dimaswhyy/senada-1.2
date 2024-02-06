@@ -61,6 +61,7 @@ class JenisTransaksiController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    
         return view('backend.senada.keuangan.jenis_transaksi.list');
     }
 

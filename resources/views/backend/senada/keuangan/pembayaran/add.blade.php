@@ -211,7 +211,7 @@
                 "@enderror" +
                 "</div>" +
                 "</td>" +
-                "<td><input name='transaction_fee[" + i + "]' class='form-control' id='transaction_fee_" + i +
+                "<td><input name='transaction_fees[" + i + "]' class='form-control' id='transaction_fees_" + i +
                 "'></td>" +
                 "<th><a href='javascript:void(0)' class='btn rounded-pill btn-sm btn-danger remove-input-field'>-</a></th>" +
                 "</tr>"
@@ -239,7 +239,7 @@
             dataPrice = $(awal + ' option:selected').attr("data-price-" + id);
             //     var select = document.getElementById(awal);
             //   var dataPrice = getSelectedOptionAttribute(select, "data-price-"+id);
-            $('#transaction_fee' + id).val(dataPrice);
+            $('#transaction_fees_' + id).val(dataPrice);
         }
 
         function sumBiaya() {
@@ -250,9 +250,9 @@
                 // console.log($('#biaya_'+i).val());
                 cek = 0;
                 // console.log("log"+a+"= "+$('#biaya_'+a).val())
-                if ($('#transaction_fee' + a).val() !== undefined) {
+                if ($('#transaction_fees_' + a).val() !== undefined) {
                     console.log("tidak undefined")
-                    cek = parseInt($('#transaction_fee' + a).val());
+                    cek = parseInt($('#transaction_fees_' + a).val());
                 }
                 sumtotal += cek;
 
@@ -265,67 +265,65 @@
 
         }
 
-        // Nanti Bakal di Pake
-        // function getJenisTransactionSelected(){
-        //     console.log("Jalan");
-        //     var nilaiId ='';
-        //     nilaiId = $('#id_rombel option:selected').val();
-        //     console.log(i);
-        //   $.ajax({
-        //     url: '/api/jenis/byIdRombel/'+nilaiId,
-        //     type: 'GET',
-        //     success: function(response) {
-        //       // Parsing data from the API response
-        //       var data = (response);
-        //     //   console.log(data)
-        //       for (var ilangOption = 0; ilangOption <= i; ilangOption++){
-        //         $('#jenis_transaksi_'+ilangOption).empty();
-        //     $('#jenis_transaksi_'+ilangOption).append('<option value="">-- Pilih Kelas --</option>');
-        //       }
-        //       // Iterating through the data and creating an option element for each item
-        //       for (var nilaiawal = 0; nilaiawal <= i; nilaiawal++) {
-        //         // console.log("JALAN LOOP")
-        //         for (var awal = 0; awal < data.length; awal++) {
-        //             var item = data[awal];
-        //         var option = document.createElement('option');
-        //         option.value = item["jenis_transaksi"];
-        //         option.text = item["jenis_transaksi"];
-        //         option.setAttribute("data-price-"+i,item["biaya_transaksi"]);
-        //         // console.log("JALAN DATA");
-        //         $('#jenis_transaksi_'+nilaiawal).append(option);
-        //       }
-        //       }
-        //     }
-        //   });
-        // }
+        function getJenisTransactionSelected(){
+            console.log("Jalan");
+            var nilaiId ='';
+            nilaiId = $('#study_group_id option:selected').val();
+            console.log(i);
+          $.ajax({
+            url: '/api/jenis/byIdRombel/'+nilaiId,
+            type: 'GET',
+            success: function(response) {
+              // Parsing data from the API response
+              var data = (response);
+            //   console.log(data)
+              for (var ilangOption = 0; ilangOption <= i; ilangOption++){
+                $('#transaction_type_'+ilangOption).empty();
+            $('#transaction_type_'+ilangOption).append('<option value="">-- Pilih Kelas --</option>');
+              }
+              // Iterating through the data and creating an option element for each item
+              for (var nilaiawal = 0; nilaiawal <= i; nilaiawal++) {
+                // console.log("JALAN LOOP")
+                for (var awal = 0; awal < data.length; awal++) {
+                    var item = data[awal];
+                var option = document.createElement('option');
+                option.value = item["transaction_type"];
+                option.text = item["transaction_type"];
+                option.setAttribute("data-price-"+i,item["transaction_fees"]);
+                // console.log("JALAN DATA");
+                $('#transaction_type_'+nilaiawal).append(option);
+              }
+              }
+            }
+          });
+        }
 
-        //Nanti Bakaldi Pake
-        // function getJenisTransactionButton(){
-        //     console.log("Jalan Button");
-        //     var nilaiId ='';
-        //     nilaiId = $('#id_rombel option:selected').val();
-        //     console.log(i);
-        //   $.ajax({
-        //     url: '/api/jenis/byIdRombel/'+nilaiId,
-        //     type: 'GET',
-        //     success: function(response) {
-        //         $('#jenis_transaksi_'+i).empty();
-        //         $('#jenis_transaksi_'+i).append('<option value="">- Pilih Jenis Transaksi -</option>');
+        function getJenisTransactionButton(){
+            console.log("Jalan Button");
+            var nilaiId ='';
+            nilaiId = $('#study_group_id option:selected').val();
+            console.log(i);
+          $.ajax({
+            url: '/api/jenis/byIdRombel/'+nilaiId,
+            type: 'GET',
+            success: function(response) {
+                $('#transaction_type_'+i).empty();
+                $('#transaction_type_'+i).append('<option value="">- Pilih Jenis Transaksi -</option>');
 
 
-        //       var data = (response);
-        //         for (var awal = 0; awal < data.length; awal++) {
-        //             var item = data[awal];
-        //             var option = document.createElement('option');
-        //             option.value = item["jenis_transaksi"];
-        //             option.text = item["jenis_transaksi"];
-        //             option.setAttribute("data-price-"+i,item["biaya_transaksi"]);
-        //                     $('#jenis_transaksi_'+i).append(option);
+              var data = (response);
+                for (var awal = 0; awal < data.length; awal++) {
+                    var item = data[awal];
+                    var option = document.createElement('option');
+                    option.value = item["transaction_type"];
+                    option.text = item["transaction_type"];
+                    option.setAttribute("data-price-"+i,item["transaction_fees"]);
+                            $('#transaction_type_'+i).append(option);
 
-        //         }
-        //     }
-        //   });
-        // }
+                }
+            }
+          });
+        }
 
         // Nanti Bakal di Pake 
         // function getKelas() {
