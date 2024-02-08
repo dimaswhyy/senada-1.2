@@ -57,27 +57,10 @@
                             @enderror
                         </div>
 
-                        {{-- dropdownKelas --}}
-                        {{-- <div class="form-group mb-3">
-                            <label for="id_kelas">Kelas</label>
-                            <select name="id_kelas" class="form-control dynamic" id="dropdownKelas" onclick="getSiswa();">
-                                <option>- Pilih Kelas -</option>
-                            </select>
-                            @error('id_kelas')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-
                         <div class="form-group mb-3">
                             <label for="student_id">Siswa</label>
-                            <select name="student_id" class="form-control" id="student_id">
-                                {{-- dropdownSiswa (Nanti Bakal di Pake) --}}
-                                <option>- Pilih Siswa -</option>
-                                @foreach ($getSiswa as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
+                            <select name="student_id" class="select2 form-select form-select-lg" id="student_id">
+                                
                             </select>
                             @error('student_id')
                                 <div class="alert alert-danger mt-2">
@@ -265,118 +248,119 @@
 
         }
 
-        function getJenisTransactionSelected(){
+        function getJenisTransactionSelected() {
             console.log("Jalan");
-            var nilaiId ='';
+            var nilaiId = '';
             nilaiId = $('#study_group_id option:selected').val();
             console.log(i);
-          $.ajax({
-            url: '/api/jenis/byIdRombel/'+nilaiId,
-            type: 'GET',
-            success: function(response) {
-              // Parsing data from the API response
-              var data = (response);
-            //   console.log(data)
-              for (var ilangOption = 0; ilangOption <= i; ilangOption++){
-                $('#transaction_type_'+ilangOption).empty();
-            $('#transaction_type_'+ilangOption).append('<option value="">-- Pilih Kelas --</option>');
-              }
-              // Iterating through the data and creating an option element for each item
-              for (var nilaiawal = 0; nilaiawal <= i; nilaiawal++) {
-                // console.log("JALAN LOOP")
-                for (var awal = 0; awal < data.length; awal++) {
-                    var item = data[awal];
-                var option = document.createElement('option');
-                option.value = item["transaction_type"];
-                option.text = item["transaction_type"];
-                option.setAttribute("data-price-"+i,item["transaction_fees"]);
-                // console.log("JALAN DATA");
-                $('#transaction_type_'+nilaiawal).append(option);
-              }
-              }
-            }
-          });
-        }
-
-        function getJenisTransactionButton(){
-            console.log("Jalan Button");
-            var nilaiId ='';
-            nilaiId = $('#study_group_id option:selected').val();
-            console.log(i);
-          $.ajax({
-            url: '/api/jenis/byIdRombel/'+nilaiId,
-            type: 'GET',
-            success: function(response) {
-                $('#transaction_type_'+i).empty();
-                $('#transaction_type_'+i).append('<option value="">- Pilih Jenis Transaksi -</option>');
-
-
-              var data = (response);
-                for (var awal = 0; awal < data.length; awal++) {
-                    var item = data[awal];
-                    var option = document.createElement('option');
-                    option.value = item["transaction_type"];
-                    option.text = item["transaction_type"];
-                    option.setAttribute("data-price-"+i,item["transaction_fees"]);
-                            $('#transaction_type_'+i).append(option);
-
+            $.ajax({
+                url: '/api/jenis/byIdRombel/' + nilaiId,
+                type: 'GET',
+                success: function(response) {
+                    // Parsing data from the API response
+                    var data = (response);
+                    //   console.log(data)
+                    for (var ilangOption = 0; ilangOption <= i; ilangOption++) {
+                        $('#transaction_type_' + ilangOption).empty();
+                        $('#transaction_type_' + ilangOption).append(
+                            '<option value="">-- Pilih Kelas --</option>');
+                    }
+                    // Iterating through the data and creating an option element for each item
+                    for (var nilaiawal = 0; nilaiawal <= i; nilaiawal++) {
+                        // console.log("JALAN LOOP")
+                        for (var awal = 0; awal < data.length; awal++) {
+                            var item = data[awal];
+                            var option = document.createElement('option');
+                            option.value = item["transaction_type"];
+                            option.text = item["transaction_type"];
+                            option.setAttribute("data-price-" + i, item["transaction_fees"]);
+                            // console.log("JALAN DATA");
+                            $('#transaction_type_' + nilaiawal).append(option);
+                        }
+                    }
                 }
-            }
-          });
+            });
         }
 
-        // Nanti Bakal di Pake 
-        // function getKelas() {
-        //     // console.log("Jalan");
-        //     var nilaiId ='';
-        //     nilaiId = $('#id_rombel option:selected').val();
+        function getJenisTransactionButton() {
+            console.log("Jalan Button");
+            var nilaiId = '';
+            nilaiId = $('#study_group_id option:selected').val();
+            console.log(i);
+            $.ajax({
+                url: '/api/jenis/byIdRombel/' + nilaiId,
+                type: 'GET',
+                success: function(response) {
+                    $('#transaction_type_' + i).empty();
+                    $('#transaction_type_' + i).append('<option value="">- Pilih Jenis Transaksi -</option>');
 
-        //   $.ajax({
-        //     url: '/api/kelas/byIdRombel/'+nilaiId,
-        //     type: 'GET',
-        //     success: function(response) {
-        //     $('#dropdownKelas').empty();
-        //     $('#dropdownKelas').append('<option value="">- Pilih Kelas -</option>');
-        //       // Parsing data from the API response
-        //       var data = (response);
-        //       console.log(data)
-        //       // Iterating through the data and creating an option element for each item
-        //       for (var i = 0; i < data.length; i++) {
-        //         var item = data[i];
-        //         var option = document.createElement('option');
-        //         option.value = item["id"];
-        //         option.text = item["kelas"];
-        //         $('#dropdownKelas').append(option);
-        //       }
-        //     }
-        //   });
-        // }
+
+                    var data = (response);
+                    for (var awal = 0; awal < data.length; awal++) {
+                        var item = data[awal];
+                        var option = document.createElement('option');
+                        option.value = item["transaction_type"];
+                        option.text = item["transaction_type"];
+                        option.setAttribute("data-price-" + i, item["transaction_fees"]);
+                        $('#transaction_type_' + i).append(option);
+
+                    }
+                }
+            });
+        }
+
+        // Perbarui fungsi subtractBiaya()
+        function subtractBiaya(id) {
+            var cek = 0;
+            if ($('#transaction_fees_' + id).val() !== undefined) {
+                cek = parseInt($('#transaction_fees_' + id).val());
+            }
+            // Perbarui variabel sumtotal dengan pengurangan nilai biaya pada baris ke-id
+            sumtotal -= cek;
+            // Perbarui nilai total pada input 'transaction_total' dengan nilai sumtotal yang baru
+            $('#transaction_total').val(sumtotal);
+        }
+
+        // Perbarui fungsi remove-input-field() untuk memanggil subtractBiaya() dan ambil indeks baris dengan index()
+        $(document).on('click', '.remove-input-field', function() {
+            var id = $(this).closest('tr').index();
+            subtractBiaya(id);
+            $(this).parents('tr').remove();
+        });
+
+
+        
+
 
         // Nanti Bakal di Pake
-        // function getSiswa() {
-        //     console.log("Jalan");
-        //     var nilaiId ='';
-        //     nilaiId = $('#dropdownKelas option:selected').val();
+        // function getKelas() {
+        // // console.log("Jalan");
+        // var nilaiId ='';
+        // nilaiId = $('#id_rombel option:selected').val();
 
-        //   $.ajax({
-        //     url: '/api/siswa/byIdRombel/'+nilaiId,
-        //     type: 'GET',
-        //     success: function(response) {
-        //     $('#dropdownSiswa').empty();
-        //     $('#dropdownSiswa').append('<option value="">- Pilih Siswa -</option>');
-        //       // Parsing data from the API response
-        //       var data = (response);
-        //       console.log(data)
-        //       // Iterating through the data and creating an option element for each item
-        //       for (var i = 0; i < data.length; i++) {
-        //         var item = data[i];
-        //         var option = document.createElement('option');
-        //         option.value = item["id_siswa"];
-        //         option.text = item["name"];
-        //         $('#dropdownSiswa').append(option);
-        //       }
-        //     }
-        //   });
-        // }
+        // $.ajax({
+        // url: '/api/kelas/byIdRombel/'+nilaiId,
+        // type: 'GET',
+        // success: function(response) {
+        // $('#dropdownKelas').empty();
+        // $('#dropdownKelas').append('<option value="">- Pilih Kelas -</option>');
+        // // Parsing data from the API response
+        // var data = (response);
+        // console.log(data)
+        // // Iterating through the data and creating an option element for each item
+        // for (var i = 0; i < data.length; i++) { // var item=data[i]; // var option=document.createElement('option'); //
+        // option.value = item[
+        // "id"]; // option.text=item["kelas"]; // $('#dropdownKelas').append(option); // } // } // }); // }
+        // Nanti Bakal di Pake // function getSiswa() { // console.log("Jalan"); // var nilaiId =''; //
+        // nilaiId = $('#dropdownKelas option:selected').val(); // $.ajax({ // url: '/api/siswa/byIdRombel/' +nilaiId, //
+        // type: 'GET', // success: function(response) { // $('#dropdownSiswa').empty(); //
+            // $('#dropdownSiswa').append('<option value="">- Pilih Siswa -</option>');
+        // // Parsing data from the API response
+        // var data = (response);
+        // console.log(data)
+        // // Iterating through the data and creating an option element for each item
+        // for (var i = 0; i < data.length; i++) { // var item=data[i]; // var option=document.createElement('option'); //
+        // option.value = item["id_siswa"]; // option.text=item["name"]; // $('#dropdownSiswa').append(option); // } // } //
+        // }); // } 
     </script>
 @endpush

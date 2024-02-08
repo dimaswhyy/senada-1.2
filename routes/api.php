@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Keuangan\APIGetSiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/jenis/byIdRombel/{id}',[App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'getJenisTransaksiList']);
+Route::get('/siswa-search', [APIGetSiswaController::class, 'getSiswaOptions']);

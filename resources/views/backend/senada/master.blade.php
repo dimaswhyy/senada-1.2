@@ -44,10 +44,6 @@
 
     {{-- DataTables --}}
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/backend/vendor/fonts/boxicons.css') }}" />
@@ -63,6 +59,8 @@
     <link rel="stylesheet" href="{{ asset('assets/backend/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
 
     <!-- Helpers -->
     <script src="{{ asset('assets/backend/vendor/js/helpers.js') }}"></script>
@@ -70,6 +68,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets/backend/js/config.js') }}"></script>
+
   </head>
 
   <body>
@@ -141,19 +140,17 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/backend/js/dashboards-analytics.js') }}"></script>
 
+
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <!-- Datatables -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.5/dist/umd/popper.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    {{-- <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> --}}
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
 
 @stack('jsAddmultiple')
 
@@ -161,61 +158,40 @@
 
 @stack('jsPopUpCetak')
 
-    {{-- <script>
-
-        $(function() {
-            var table = $('.repeat-form-pay').document{
-                $('thead').on('click', '.addRow', function(){
-            var tr = "<tr>"+
-                        "<td>"+
-                            "<div class='form-group mb-3'>"+
-                                "<select name='jenis_transaksi' class='form-control' id='jenis_transaksi'>"+
-                                    "<option>- Pilih Jenis Transaksi -</option>"+
-                                    "@foreach ($getJenis as $item)"+
-                                    "<option>{{ $item->jenis_transaksi }}</option>"+
-                                    "@endforeach"+
-                                "</select>"+
-                                "@error('jenis_transaksi')"+
-                                "<div class='alert alert-danger mt-2'>"+
-                                "{{ $message }}"+
-                                "</div>"+
-                                "@enderror"+
-                            "</div>"+
-                        "</td>"+
-                        "<td>"+
-                            "<div class='form-group mb-3'>"+
-                                "<select name='transaksi_bulan' class='form-control' id='transaksi_bulan'>"+
-                                    "<option>- Pilih Bulan -</option>"+
-                                    "<option value='1'>Januari</option>"+
-                                    "<option value='2'>Februari</option>"+
-                                    "<option value='3'>Maret</option>"+
-                                    "<option value='4'>April</option>"+
-                                    "<option value='5'>Mei</option>"+
-                                    "<option value='6'>Juni</option>"+
-                                    "<option value='7'>Juli</option>"+
-                                    "<option value='8'>Agustus</option>"+
-                                    "<option value='9'>September</option>"+
-                                    "<option value='10'>Oktober</option>"+
-                                    "<option value='11'>November</option>"+
-                                    "<option value='12'>Desember</option>"+
-                                "</select>"+
-                                "@error('transaksi_bulan')"+
-                                    "<div class='alert alert-danger mt-2'>"+
-                                    "{{ $message }}"+
-                                    "</div>"+
-                                "@enderror"+
-                            "</div>"+
-                        "</td>"+
-                        "<td><input name='biaya' class='form-control' id='biaya' readonly></td>"+
-                        "<th><a href='javascript:void(0)' class='btn btn-sm btn-danger deleteRow'>-</a></th>"+
-                    "</tr>"
-
-            $('tbody').append(tr);
+    {{-- Sctipt Select2 --}}
+    {{-- <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2
+            $('#student_id').select2({
+                ajax: {
+                    url: '/api/siswa-search',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                            })
+                        };
+                    },
+                    cache: true,
+                    // Additional function to search based on term
+                    data: function(params) {
+                        return {
+                            term: params.term,
+                        };
+                    },
+                },
+                placeholder: '- Pilih Siswa -',
+                minimumInputLength: 0
+            });
         });
-            }
-        }):
-
-    </script> --}}
+    </script>
 
     {{-- Script List Data Table --}}
     <script type="text/javascript">
@@ -293,7 +269,7 @@
                         data: 'transaction_type',
                         name: 'transaction_type'
                     },
-                    
+
                     {
                         data: 'transaction_via',
                         name: 'transaction_via'
@@ -305,7 +281,7 @@
                             if (data == 'Disetujui') {
                                 console.log(data);
                                 return '<span class="badge bg-label-success me-1">Disetujui</span>';
-                            } else if (data == 'Dalam Antrian'){
+                            } else if (data == 'Dalam Antrian') {
                                 return '<span class="badge bg-label-warning me-1">Dalam Antrian</span>';
                             } else {
                                 return '<span class="badge bg-label-danger me-1">Ditolak</span>';
