@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('account_id');
+            $table->string('school_id');
             $table->string('study_group_id');
             $table->string('class_id');
             $table->string('student_id');

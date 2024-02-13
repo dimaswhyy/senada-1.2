@@ -19,6 +19,7 @@ class Transaksi extends Model
     protected $fillable = [
         'id',
         'account_id',
+        'school_id',
         'study_group_id',
         'class_id',
         'student_id',

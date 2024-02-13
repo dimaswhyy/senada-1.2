@@ -19,6 +19,20 @@
                         <input name="information" class="form-control" id="information" value="Disetujui" readonly hidden>
 
                         <div class="form-group mb-3">
+                            <label for="school_id">Sekolah</label>
+                            <select name="school_id" class="form-control" id="school_id">
+                                <option>- Pilih Sekolah -</option>
+                                <option value="1">TK</option>
+                                <option value="2">SD</option>
+                            </select>
+                            @error('school_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="study_group_id">Rombongan Belajar</label>
                             <select name="study_group_id" class="form-control" id="study_group_id">
                                 {{-- onclick="getKelas();getJenisTransactionSelected();" Nanti Bakal Di Pake --}}

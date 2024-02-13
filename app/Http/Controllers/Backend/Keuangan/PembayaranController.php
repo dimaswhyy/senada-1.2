@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\JenisTransaksi;
 use App\Models\PesertaDidik;
 use App\Models\RombonganBelajar;
+use App\Models\Transaksi;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -38,6 +40,64 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set('Asia/Jakarta');
+
+        $idSchool = $request->school_id;
+        $nameSCH="";
+        if($idSchool == '1'){
+            $nameSCH = 'TK';
+        }else{
+            $nameSCH = 'SD';
+        }
+
+        // $no = 0000;
+        $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
+        if($pembayaran){
+            $nourut = substr($pembayaran,6,14) + 1;
+            $no_urut_str = substr($nourut,6,10);
+            $no_urut = $nameSCH . "-" . $no_urut_str;
+            $hasil = $no_urut;
+        }else{
+            $nourut = $nameSCH . "-" . 0001;
+            $hasil = $nourut;
+        }
+        $notransaksi = $hasil;
+
+        $dataJT = $request->jenis_transaksi;
+        $dataBT = $request->transaksi_bulan;
+        $dataBiT = $request->biaya;
+        $total = count($dataJT);
+        $tahunTrans = date('Y');
+
+        for ($i=1; $i<=$total; $i++){
+            $pembayarans = Transaksi::create([
+                'id'    => Str::uuid(),
+                'id_unit' => $request->id_unit,
+                'id_unit_account'     => $request->id_unit_account,
+                'id_rombel' => $request->id_rombel,
+                'id_kelas' => $request->id_kelas,
+                'id_siswa' => $request->id_siswa,
+                'tanggal_transaksi' => $request->tanggal_transaksi,
+                'no_transaksi' => $notransaksi,
+                'jenis_transaksi' => $dataJT[$i],
+                'bulan_transaksi' => $dataBT[$i],
+                'tahun_transaksi' => $tahunTrans,
+                'biaya_transaksi' => $dataBiT[$i],
+                'total_transaksi' => $request->total,
+                'keterangan' => $request->keterangan,
+                'bukti_transfer'     => null
+            ]);
+            // dd($pembayarans);
+        }
+
+        if($pembayarans){
+            //redirect dengan pesan sukses
+            return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Disimpan!']);
+
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('pembayaran.add')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 
     /**
