@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('study_group_id');
             $table->string('class_id');
             $table->string('student_id');
-            $table->string('transaction_type_id');
             $table->string('transaction_order');
+            $table->string('transaction_type');
             $table->date('transaction_date');
             $table->string('transaction_month');
             $table->string('transaction_year');

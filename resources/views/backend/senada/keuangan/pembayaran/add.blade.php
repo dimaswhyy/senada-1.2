@@ -35,7 +35,6 @@
                         <div class="form-group mb-3">
                             <label for="study_group_id">Rombongan Belajar</label>
                             <select name="study_group_id" class="form-control" id="study_group_id">
-                                {{-- onclick="getKelas();getJenisTransactionSelected();" Nanti Bakal Di Pake --}}
                                 <option>- Pilih Rombongan Belajar -</option>
                                 @foreach ($getRombel as $item)
                                     <option value="{{ $item->id }}">{{ $item->study_group }}</option>
@@ -52,6 +51,9 @@
                             <label for="class_id">Kelas</label>
                             <select name="class_id" class="form-control" id="class_id">
                                 <option>- Pilih Kelas -</option>
+                                <option>TK A</option>
+                                <option>TK B1</option>
+                                <option>TK B2</option>
                                 <option>1A</option>
                                 <option>1B</option>
                                 <option>2A</option>
@@ -74,7 +76,7 @@
                         <div class="form-group mb-3">
                             <label for="student_id">Siswa</label>
                             <select name="student_id" class="select2 form-select form-select-lg" id="student_id">
-                                
+                            {{-- Data Select2 Otomatis --}}
                             </select>
                             @error('student_id')
                                 <div class="alert alert-danger mt-2">
