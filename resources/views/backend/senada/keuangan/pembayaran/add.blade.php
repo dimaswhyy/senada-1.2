@@ -210,7 +210,7 @@
                 "@enderror" +
                 "</div>" +
                 "</td>" +
-                "<td><input name='transaction_fees[" + i + "]' class='form-control' id='transaction_fees_" + i +
+                "<td><input name='transaction_fee[" + i + "]' class='form-control' id='transaction_fee_" + i +
                 "'></td>" +
                 "<th><a href='javascript:void(0)' class='btn rounded-pill btn-sm btn-danger remove-input-field'>-</a></th>" +
                 "</tr>"
@@ -238,7 +238,7 @@
             dataPrice = $(awal + ' option:selected').attr("data-price-" + id);
             //     var select = document.getElementById(awal);
             //   var dataPrice = getSelectedOptionAttribute(select, "data-price-"+id);
-            $('#transaction_fees_' + id).val(dataPrice);
+            $('#transaction_fee_' + id).val(dataPrice);
         }
 
         function sumBiaya() {
@@ -249,9 +249,9 @@
                 // console.log($('#biaya_'+i).val());
                 cek = 0;
                 // console.log("log"+a+"= "+$('#biaya_'+a).val())
-                if ($('#transaction_fees_' + a).val() !== undefined) {
+                if ($('#transaction_fee_' + a).val() !== undefined) {
                     console.log("tidak undefined")
-                    cek = parseInt($('#transaction_fees_' + a).val());
+                    cek = parseInt($('#transaction_fee_' + a).val());
                 }
                 sumtotal += cek;
 
@@ -328,8 +328,8 @@
         // Perbarui fungsi subtractBiaya()
         function subtractBiaya(id) {
             var cek = 0;
-            if ($('#transaction_fees_' + id).val() !== undefined) {
-                cek = parseInt($('#transaction_fees_' + id).val());
+            if ($('#transaction_fee_' + id).val() !== undefined) {
+                cek = parseInt($('#transaction_fee_' + id).val());
             }
             // Perbarui variabel sumtotal dengan pengurangan nilai biaya pada baris ke-id
             sumtotal -= cek;

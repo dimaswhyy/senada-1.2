@@ -46,16 +46,37 @@ class PembayaranController extends Controller
         $nameSCH = ($idSchool == '1') ? 'TK' : 'SD';
 
         // $no = 0000;
+        // $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
+        // if($pembayaran){
+        //     $nourut = substr($pembayaran,3,10) + 1;
+        //     $no_urut_str = substr($nourut,3,4);
+        //     $no_urut = $nameSCH . "-" . $no_urut_str;
+        //     $hasil = $no_urut;
+        // }else{
+        //     $nourut = $nameSCH . "-" . 0000001;
+        //     $hasil = $nourut;
+        // }
+        // $notransaksi = $hasil;
+
         $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
-        if($pembayaran){
-            $nourut = substr($pembayaran,3,10) + 1;
-            $no_urut_str = substr($nourut,3,4);
-            $no_urut = $nameSCH . "-" . $no_urut_str;
-            $hasil = $no_urut;
-        }else{
-            $nourut = $nameSCH . "-" . 0000001;
-            $hasil = $nourut;
+
+        // Jika sudah ada nomor urut sebelumnya
+        if ($pembayaran) {
+            // Pisahkan bagian non-numerik (misalnya, 'SD-') dari bagian numerik
+            $parts = explode('-', $pembayaran);
+            $numericPart = intval($parts[1]); // Ubah bagian numerik menjadi integer
+            $numericPart++; // Tambah 1 ke nomor urut
+
+            // Format kembali nomor urut menjadi string dengan panjang yang sama
+            $newNumericPart = str_pad($numericPart, strlen($parts[1]), '0', STR_PAD_LEFT);
+
+            // Gabungkan kembali bagian non-numerik dan bagian numerik yang baru
+            $hasil = $parts[0] . '-' . $newNumericPart;
+        } else {
+            // Jika belum ada nomor urut sebelumnya, mulai dengan nomor urut 1
+            $hasil = $nameSCH . '-0000001';
         }
+
         $notransaksi = $hasil;
 
         $dataJT = $request->transaction_type;
@@ -66,7 +87,7 @@ class PembayaranController extends Controller
 
         $successCount = 0;
 
-        for ($i=1; $i<=$total; $i++){
+        for ($i = 1; $i <= $total; $i++) {
             $pembayarans = Transaksi::create([
                 'id'                => Str::uuid(),
                 'account_id'        => $request->account_id,
@@ -80,26 +101,23 @@ class PembayaranController extends Controller
                 'transaction_month' => $dataBT[$i],
                 'transaction_year'  => $tahunTrans,
                 'transaction_fee'   => $dataBiT[$i],
-                'transaction_total' => $request->total,
+                'transaction_total' => $request->transaction_total,
                 'transaction_via'   => $request->transaction_via,
-                'information'       => $request->information,
-                'bukti_transfer'    => null
+                'transfer_evidence' => "Dummy",
+                'information'       => $request->information
             ]);
 
             if ($pembayarans) {
                 $successCount++; // Jika penyimpanan berhasil, tambahkan counter
             }
-            
-            dd($pembayarans);
         }
 
 
 
-        if($pembayarans){
+        if ($successCount == $total) {
             //redirect dengan pesan sukses
             return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Disimpan!']);
-
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('pembayaran.add')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -139,7 +157,7 @@ class PembayaranController extends Controller
 
     public function getJenisTransaksiList($id)
     {
-        $listJenis = JenisTransaksi::where('study_group_id',$id)->get();
+        $listJenis = JenisTransaksi::where('study_group_id', $id)->get();
         return response()->json($listJenis);
     }
 }
