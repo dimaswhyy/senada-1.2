@@ -258,8 +258,8 @@
                         name: 'transaction_order'
                     },
                     {
-                        data: 'student_id',
-                        name: 'student_id'
+                        data: 'name',
+                        name: 'peserta_didiks.name'
                     },
                     {
                         data: 'class_id',
