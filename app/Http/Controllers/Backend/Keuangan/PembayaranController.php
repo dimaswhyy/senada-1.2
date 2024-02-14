@@ -42,6 +42,8 @@ class PembayaranController extends Controller
                                 return true;
                             } else if (Str::contains(Str::lower($row['transaction_order']), Str::lower($request->get('search')))) {
                                 return true;
+                            } else if (Str::contains(Str::lower($row['  name']), Str::lower($request->get('search')))) {
+                                return true;
                             }
 
                             return false;
@@ -89,19 +91,6 @@ class PembayaranController extends Controller
         $idSchool = $request->school_id;
         $nameSCH = ($idSchool == '1') ? 'TK' : 'SD';
 
-        // $no = 0000;
-        // $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
-        // if($pembayaran){
-        //     $nourut = substr($pembayaran,3,10) + 1;
-        //     $no_urut_str = substr($nourut,3,4);
-        //     $no_urut = $nameSCH . "-" . $no_urut_str;
-        //     $hasil = $no_urut;
-        // }else{
-        //     $nourut = $nameSCH . "-" . 0000001;
-        //     $hasil = $nourut;
-        // }
-        // $notransaksi = $hasil;
-
         $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
 
         // Jika sudah ada nomor urut sebelumnya
@@ -129,8 +118,9 @@ class PembayaranController extends Controller
         $total = count($dataJT);
         $tahunTrans = date('Y');
 
-        $successCount = 0;
+        // $successCount = 0;
 
+        
         for ($i = 1; $i <= $total; $i++) {
             $pembayarans = Transaksi::create([
                 'id'                => Str::uuid(),
@@ -150,15 +140,9 @@ class PembayaranController extends Controller
                 'transfer_evidence' => "Dummy",
                 'information'       => $request->information
             ]);
-
-            if ($pembayarans) {
-                $successCount++; // Jika penyimpanan berhasil, tambahkan counter
-            }
         }
 
-
-
-        if ($successCount == $total) {
+        if ($pembayarans) {
             //redirect dengan pesan sukses
             return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Disimpan!']);
         } else {
@@ -181,6 +165,28 @@ class PembayaranController extends Controller
     public function edit(string $id)
     {
         //
+        $pembayarans = Transaksi::find($id);
+        $getSiswa = PesertaDidik::all();
+        $getJenisTransaksi = JenisTransaksi::all();
+        $getRombel = RombonganBelajar::all();
+        $kelasOptions = [
+            '- Pilih Kelas -',
+            'TK A',
+            'TK B1',
+            'TK B2',
+            '1A',
+            '1B',
+            '2A',
+            '2B',
+            '3',
+            '4A',
+            '4B',
+            '5A',
+            '5B',
+            '6A',
+            '6B'
+        ];
+        return view('backend.senada.keuangan.pembayaran.edit', compact('pembayarans', 'getSiswa', 'getJenisTransaksi', 'getRombel', 'kelasOptions'));
     }
 
     /**
