@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\JenisTransaksi;
 use App\Models\RombonganBelajar;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PembayaranController extends Controller
 {
@@ -21,7 +22,7 @@ class PembayaranController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = Transaksi::leftjoin('peserta_didiks', 'transaksis.student_id', '=', 'peserta_didiks.id')->select('transaksis.id','peserta_didiks.name','transaksis.*', 'transaksis.created_at')->latest()->get();
+            $data = Transaksi::leftjoin('peserta_didiks', 'transaksis.student_id', '=', 'peserta_didiks.id')->select('transaksis.id', 'peserta_didiks.name', 'transaksis.*', 'transaksis.created_at')->latest()->get();
             // dd($data);
 
             return datatables::of($data)
@@ -51,10 +52,10 @@ class PembayaranController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $dropBtn ='<div class="dropdown">
+                    $dropBtn = '<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href='.route("pembayaran.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item" href=' . route("pembayaran.edit", $row->id) . '><i class="bx bx-edit-alt me-1"></i> Ubah</a>
                           <form action="' . route('pembayaran.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
@@ -120,26 +121,54 @@ class PembayaranController extends Controller
 
         // $successCount = 0;
 
-        
-        for ($i = 1; $i <= $total; $i++) {
-            $pembayarans = Transaksi::create([
-                'id'                => Str::uuid(),
-                'account_id'        => $request->account_id,
-                'school_id'         => $request->school_id,
-                'study_group_id'    => $request->study_group_id,
-                'class_id'          => $request->class_id,
-                'student_id'        => $request->student_id,
-                'transaction_date'  => $request->transaction_date,
-                'transaction_order' => $notransaksi,
-                'transaction_type'  => $dataJT[$i],
-                'transaction_month' => $dataBT[$i],
-                'transaction_year'  => $tahunTrans,
-                'transaction_fee'   => $dataBiT[$i],
-                'transaction_total' => $request->transaction_total,
-                'transaction_via'   => $request->transaction_via,
-                'transfer_evidence' => "Dummy",
-                'information'       => $request->information
-            ]);
+        if (empty($request->file("photo_profile"))) {
+            for ($i = 1; $i <= $total; $i++) {
+                $pembayarans = Transaksi::create([
+                    'id'                => Str::uuid(),
+                    'account_id'        => $request->account_id,
+                    'school_id'         => $request->school_id,
+                    'study_group_id'    => $request->study_group_id,
+                    'class_id'          => $request->class_id,
+                    'student_id'        => $request->student_id,
+                    'transaction_date'  => $request->transaction_date,
+                    'transaction_order' => $notransaksi,
+                    'transaction_type'  => $dataJT[$i],
+                    'transaction_month' => $dataBT[$i],
+                    'transaction_year'  => $tahunTrans,
+                    'transaction_fee'   => $dataBiT[$i],
+                    'transaction_total' => $request->transaction_total,
+                    'transaction_via'   => $request->transaction_via,
+                    'information'       => $request->information
+                ]);
+            }
+        } else {
+            $buktiTransfer = $request->file('transfer_evidence');
+
+            // Simpan file jika diunggah
+            if (!empty($buktiTransfer)) {
+                $buktiTransfer->storeAs('public/transfer_evidence', $buktiTransfer->hashName());
+            }
+
+            for ($i = 1; $i <= $total; $i++) {
+                $pembayarans = Transaksi::create([
+                    'id'                => Str::uuid(),
+                    'account_id'        => $request->account_id,
+                    'school_id'         => $request->school_id,
+                    'study_group_id'    => $request->study_group_id,
+                    'class_id'          => $request->class_id,
+                    'student_id'        => $request->student_id,
+                    'transaction_date'  => $request->transaction_date,
+                    'transaction_order' => $notransaksi,
+                    'transaction_type'  => $dataJT[$i],
+                    'transaction_month' => $dataBT[$i],
+                    'transaction_year'  => $tahunTrans,
+                    'transaction_fee'   => $dataBiT[$i],
+                    'transaction_total' => $request->transaction_total,
+                    'transaction_via'   => $request->transaction_via,
+                    'transfer_evidence' => !empty($buktiTransfer) ? $buktiTransfer->hashName() : null,
+                    'information'       => $request->information
+                ]);
+            }
         }
 
         if ($pembayarans) {
@@ -195,6 +224,33 @@ class PembayaranController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $pembayarans = Transaksi::findOrFail($id);
+
+        $pembayarans->update([
+            'account_id'        => $request->account_id,
+            'school_id'         => $request->school_id,
+            'study_group_id'    => $request->study_group_id,
+            'class_id'          => $request->class_id,
+            'student_id'        => $request->student_id,
+            'transaction_date'  => $request->transaction_date,
+            'transaction_order' => $request->transaction_order,
+            'transaction_type'  => $request->transaction_type,
+            'transaction_month' => $request->transaction_month,
+            'transaction_year'  => $request->transaction_year,
+            'transaction_fee'   => $request->transaction_fee,
+            'transaction_total' => $request->transaction_total,
+            'transaction_via'   => $request->transaction_via,
+            'transfer_evidence' => "Dummy",
+            'information'       => $request->information
+        ]);
+
+        if ($pembayarans) {
+            //redirect dengan pesan sukses
+            return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('pembayaran.edit')->with(['error' => 'Data Gagal Diubah!']);
+        }
     }
 
     /**

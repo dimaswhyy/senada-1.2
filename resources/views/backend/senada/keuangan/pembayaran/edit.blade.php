@@ -82,7 +82,7 @@
 
                         <div class="form-group mb-3">
                             <label for="student_id">Siswa</label>
-                            <select name="student_id" class="select2 form-select form-select-lg" id="student_id" readonly>
+                            <select name="student_id" class="form-select form-select-lg" id="student_id" readonly>
                                 @foreach ($getSiswa as $item)
                                     <option value="{{ $item->id }}"
                                         {{ $pembayarans->student_id == $item->id ? 'selected' : '' }}>
