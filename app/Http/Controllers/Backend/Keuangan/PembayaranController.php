@@ -29,9 +29,9 @@ class PembayaranController extends Controller
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
 
-                    if (!empty($request->get('peserta_didiks.name'))) {
+                    if (!empty($request->get('transaction_order'))) {
                         $instance->collection = $instance->collection->filter(function ($row) use ($request) {
-                            return Str::contains($row['peserta_didiks.name'], $request->get('peserta_didiks.name')) ? true : false;
+                            return Str::contains($row['transaction_order'], $request->get('transaction_order')) ? true : false;
                         });
                     }
 
@@ -43,7 +43,7 @@ class PembayaranController extends Controller
                                 return true;
                             } else if (Str::contains(Str::lower($row['transaction_order']), Str::lower($request->get('search')))) {
                                 return true;
-                            } else if (Str::contains(Str::lower($row['  name']), Str::lower($request->get('search')))) {
+                            } else if (Str::contains(Str::lower($row['name']), Str::lower($request->get('search')))) {
                                 return true;
                             }
 
@@ -120,14 +120,11 @@ class PembayaranController extends Controller
             'class_id'          => 'required',
             'student_id'        => 'required',
             'transaction_date'  => 'required',
-            'transaction_order' => 'required',
             'transaction_type'  => 'required',
             'transaction_month' => 'required',
-            'transaction_year'  => 'required',
             'transaction_fee'   => 'required',
             'transaction_total' => 'required',
             'transaction_via'   => 'required',
-            'transfer_evidence' => 'required',
             'information'       => 'required',
         ]);
 
@@ -240,43 +237,53 @@ class PembayaranController extends Controller
     {
         //
 
-        $this->validate($request, [
-            'account_id'        => 'required',
-            'school_id'         => 'required',
-            'study_group_id'    => 'required',
-            'class_id'          => 'required',
-            'student_id'        => 'required',
-            'transaction_date'  => 'required',
-            'transaction_order' => 'required',
-            'transaction_type'  => 'required',
-            'transaction_month' => 'required',
-            'transaction_year'  => 'required',
-            'transaction_fee'   => 'required',
-            'transaction_total' => 'required',
-            'transaction_via'   => 'required',
-            'transfer_evidence' => 'required',
-            'information'       => 'required',
-        ]);
-        
         $pembayarans = Transaksi::findOrFail($id);
 
-        $pembayarans->update([
-            'account_id'        => $request->account_id,
-            'school_id'         => $request->school_id,
-            'study_group_id'    => $request->study_group_id,
-            'class_id'          => $request->class_id,
-            'student_id'        => $request->student_id,
-            'transaction_date'  => $request->transaction_date,
-            'transaction_order' => $request->transaction_order,
-            'transaction_type'  => $request->transaction_type,
-            'transaction_month' => $request->transaction_month,
-            'transaction_year'  => $request->transaction_year,
-            'transaction_fee'   => $request->transaction_fee,
-            'transaction_total' => $request->transaction_total,
-            'transaction_via'   => $request->transaction_via,
-            'transfer_evidence' => "Dummy",
-            'information'       => $request->information
-        ]);
+        $currentBuktiTransfer = $pembayarans->transfer_evidence;
+        $tahunTrans = date('Y');
+
+        if ($request->file("transfer_evidence") == "") {
+            $pembayarans->update([
+                'account_id'        => $request->account_id,
+                'school_id'         => $request->school_id,
+                'study_group_id'    => $request->study_group_id,
+                'class_id'          => $request->class_id,
+                'student_id'        => $request->student_id,
+                'transaction_date'  => $request->transaction_date,
+                'transaction_order' => $request->transaction_order,
+                'transaction_type'  => $request->transaction_type,
+                'transaction_month' => $request->transaction_month,
+                'transaction_year'  => $tahunTrans,
+                'transaction_fee'   => $request->transaction_fee,
+                'transaction_total' => $request->transaction_total,
+                'transaction_via'   => $request->transaction_via,
+                'transfer_evidence' => $currentBuktiTransfer,
+                'information'       => $request->information
+            ]);
+        } else {
+            Storage::disk('local')->delete('public/transfer_evidence/'.$pembayarans->transfer_evidence);
+
+            $buktiTransfer = $request->file('transfer_evidence');
+            $buktiTransfer->storeAs('public/transfer_evidence', $buktiTransfer->hashName());
+
+            $pembayarans->update([
+                'account_id'        => $request->account_id,
+                'school_id'         => $request->school_id,
+                'study_group_id'    => $request->study_group_id,
+                'class_id'          => $request->class_id,
+                'student_id'        => $request->student_id,
+                'transaction_date'  => $request->transaction_date,
+                'transaction_order' => $request->transaction_order,
+                'transaction_type'  => $request->transaction_type,
+                'transaction_month' => $request->transaction_month,
+                'transaction_year'  => $tahunTrans,
+                'transaction_fee'   => $request->transaction_fee,
+                'transaction_total' => $request->transaction_total,
+                'transaction_via'   => $request->transaction_via,
+                'transfer_evidence' => $buktiTransfer->hashName(),
+                'information'       => $request->information
+            ]);
+        }
 
         if ($pembayarans) {
             //redirect dengan pesan sukses
@@ -293,6 +300,7 @@ class PembayaranController extends Controller
     public function destroy(string $id)
     {
         //
+        
     }
 
     public function getJenisTransaksiList($id)

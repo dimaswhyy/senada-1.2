@@ -169,9 +169,9 @@
                             <label>Upload Bukti Transfer</label>
                             <div class="input-group col-xs-12">
                                 <input type="file"
-                                    class="form-control @error('transfer_evidance') is-invalid @enderror"
-                                    name="transfer_evidance">
-                                @error('transfer_evidance')
+                                    class="form-control @error('transfer_evidence') is-invalid @enderror"
+                                    name="transfer_evidence">
+                                @error('transfer_evidence')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -180,8 +180,8 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="Information">Keterangan</label>
-                            <select name="Information" class="form-control" id="Information">
+                            <label for="information">Keterangan</label>
+                            <select name="information" class="form-control" id="information">
                                 @if ($pembayarans->information == '')
                                     <option>- Pilih -</option>
                                     <option>Disetujui</option>
@@ -201,7 +201,7 @@
                                     <option>Disetujui</option>
                                 @endif
                             </select>
-                            @error('Information')
+                            @error('information')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>
