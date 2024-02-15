@@ -121,7 +121,7 @@ class PembayaranController extends Controller
 
         // $successCount = 0;
 
-        if (empty($request->file("photo_profile"))) {
+        if ($request->file("transfer_evidence") == "") {
             for ($i = 1; $i <= $total; $i++) {
                 $pembayarans = Transaksi::create([
                     'id'                => Str::uuid(),
@@ -138,16 +138,13 @@ class PembayaranController extends Controller
                     'transaction_fee'   => $dataBiT[$i],
                     'transaction_total' => $request->transaction_total,
                     'transaction_via'   => $request->transaction_via,
+                    'transfer_evidence' => "Tidak Melalui Transfer",
                     'information'       => $request->information
                 ]);
             }
         } else {
             $buktiTransfer = $request->file('transfer_evidence');
-
-            // Simpan file jika diunggah
-            if (!empty($buktiTransfer)) {
-                $buktiTransfer->storeAs('public/transfer_evidence', $buktiTransfer->hashName());
-            }
+            $buktiTransfer->storeAs('public/transfer_evidence', $buktiTransfer->hashName());
 
             for ($i = 1; $i <= $total; $i++) {
                 $pembayarans = Transaksi::create([
@@ -165,7 +162,7 @@ class PembayaranController extends Controller
                     'transaction_fee'   => $dataBiT[$i],
                     'transaction_total' => $request->transaction_total,
                     'transaction_via'   => $request->transaction_via,
-                    'transfer_evidence' => !empty($buktiTransfer) ? $buktiTransfer->hashName() : null,
+                    'transfer_evidence' => $buktiTransfer->hashName(),
                     'information'       => $request->information
                 ]);
             }

@@ -144,9 +144,9 @@
                         <div class="form-group mb-3">
                             <label>Upload Bukti Transfer</label>
                             <div class="input-group col-xs-12">
-                                <input type="file" class="form-control @error('transfer_evidance') is-invalid @enderror"
-                                    name="transfer_evidance">
-                                @error('transfer_evidance')
+                                <input type="file" class="form-control @error('transfer_evidence') is-invalid @enderror"
+                                    name="transfer_evidence">
+                                @error('transfer_evidence')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
