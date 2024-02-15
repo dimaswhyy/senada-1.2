@@ -162,6 +162,10 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <div class="example-image-container">
+                                <img src="{{ Storage::url('public/transfer_evidence/') . $pembayarans->transfer_evidence }}"
+                                    alt="Bukti Transfer" style="max-height: 200px; margin-right: 10px;">
+                            </div>
                             <label>Upload Bukti Transfer</label>
                             <div class="input-group col-xs-12">
                                 <input type="file"

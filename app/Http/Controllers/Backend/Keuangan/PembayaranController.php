@@ -113,6 +113,24 @@ class PembayaranController extends Controller
 
         $notransaksi = $hasil;
 
+        $this->validate($request, [
+            'account_id'        => 'required',
+            'school_id'         => 'required',
+            'study_group_id'    => 'required',
+            'class_id'          => 'required',
+            'student_id'        => 'required',
+            'transaction_date'  => 'required',
+            'transaction_order' => 'required',
+            'transaction_type'  => 'required',
+            'transaction_month' => 'required',
+            'transaction_year'  => 'required',
+            'transaction_fee'   => 'required',
+            'transaction_total' => 'required',
+            'transaction_via'   => 'required',
+            'transfer_evidence' => 'required',
+            'information'       => 'required',
+        ]);
+
         $dataJT = $request->transaction_type;
         $dataBT = $request->transaction_month;
         $dataBiT = $request->transaction_fee;
@@ -221,6 +239,25 @@ class PembayaranController extends Controller
     public function update(Request $request, string $id)
     {
         //
+
+        $this->validate($request, [
+            'account_id'        => 'required',
+            'school_id'         => 'required',
+            'study_group_id'    => 'required',
+            'class_id'          => 'required',
+            'student_id'        => 'required',
+            'transaction_date'  => 'required',
+            'transaction_order' => 'required',
+            'transaction_type'  => 'required',
+            'transaction_month' => 'required',
+            'transaction_year'  => 'required',
+            'transaction_fee'   => 'required',
+            'transaction_total' => 'required',
+            'transaction_via'   => 'required',
+            'transfer_evidence' => 'required',
+            'information'       => 'required',
+        ]);
+        
         $pembayarans = Transaksi::findOrFail($id);
 
         $pembayarans->update([
