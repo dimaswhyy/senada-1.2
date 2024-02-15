@@ -300,7 +300,16 @@ class PembayaranController extends Controller
     public function destroy(string $id)
     {
         //
-        
+        $pembyarans = Transaksi::findOrFail($id);
+
+        $pembyarans->delete();
+        if ($pembyarans) {
+            //redirect dengan pesan sukses
+            return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('pembayaran.edit')->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
 
     public function getJenisTransaksiList($id)
