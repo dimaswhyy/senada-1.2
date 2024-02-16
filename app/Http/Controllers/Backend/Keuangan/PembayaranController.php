@@ -56,6 +56,7 @@ class PembayaranController extends Controller
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href=' . route("pembayaran.edit", $row->id) . '><i class="bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item" href='.route("pembayaran.invoice", $row->transaction_order).'><i class="bx bx-printer me-1"></i> Cetak</a>
                           <form action="' . route('pembayaran.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
@@ -316,5 +317,13 @@ class PembayaranController extends Controller
     {
         $listJenis = JenisTransaksi::where('study_group_id', $id)->get();
         return response()->json($listJenis);
+    }
+
+    public function invoice($id)
+    {
+        // $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran = Transaksi::where('transaction_order', $id)->leftjoin('peserta_didiks', 'transaksis.student_id', '=', 'peserta_didiks.id')->select('transaksis.id', 'peserta_didiks.name', 'transaksis.transaction_date', 'transaksis.transaction_type', 'transaksis.transaction_month', 'transaksis.transaction_year', 'transaksis.information', 'transaksis.*', 'transaksis.created_at')->latest()->get();
+
+        return view('backend.senada.keuangan.pembayaran.invoice', compact('pembayaran'));
     }
 }

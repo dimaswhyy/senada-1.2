@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaksi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,8 +15,22 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('backend.senada.dashboard.index');
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
 
+        // Hitung Total Penerimaan Masih Belum Berdasarkan transaction_order yang tidak sama
+        $totalPenerimaan = Transaksi::whereDate('transaction_date', $today)
+            ->select(Transaksi::raw('SUM(transaction_total) as total'))
+            ->groupBy('transaction_order')
+            ->pluck('total')
+            ->sum();
+
+        // Hitung Total Keuangan Masih Belum Berdasarkan transaction_order yang tidak sama
+        $totalKeuangan = Transaksi::selectRaw('SUM(transaction_total) as total')->sum('transaction_total');
+
+        // Menghitung jumlah transaksi per order berdasarkan tanggal hari ini Masih Belum Berdasrakan transaction_order yang tidak sama 
+        $jumlahTransaksiPerOrder = Transaksi::whereDate('transaction_date', $today)->count();
+
+        return view('backend.senada.dashboard.index', compact('totalPenerimaan', 'totalKeuangan', 'jumlahTransaksiPerOrder'));
     }
 
     /**

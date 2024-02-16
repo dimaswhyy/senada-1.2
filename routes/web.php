@@ -31,4 +31,5 @@ Route::resource('/rombongan-belajar', RombonganBelajarController::class);
 // Keuangan
 Route::resource('/jenis-transaksi', JenisTransaksiController::class);
 Route::resource('/pembayaran', PembayaranController::class);
+Route::get('/pembayaran/invoice/{id}', [App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'invoice'])->name('pembayaran.invoice');
 
