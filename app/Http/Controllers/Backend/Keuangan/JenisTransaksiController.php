@@ -71,7 +71,7 @@ class JenisTransaksiController extends Controller
     public function create()
     {
         //
-        $getRombel = RombonganBelajar::all();
+        $getRombel = RombonganBelajar::orderBy('study_group', 'asc')->get();
         return view('backend.senada.keuangan.jenis_transaksi.add', compact('getRombel'));
     }
 
@@ -119,7 +119,7 @@ class JenisTransaksiController extends Controller
     public function edit(string $id)
     {
         //
-        $getRombel = RombonganBelajar::all();
+        $getRombel = RombonganBelajar::orderBy('study_group', 'asc')->get();
         $jenistransaksis = JenisTransaksi::find($id);
         return view('backend.senada.keuangan.jenis_transaksi.edit', compact('jenistransaksis','getRombel'));
     }

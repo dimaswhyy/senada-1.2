@@ -76,9 +76,9 @@ class PembayaranController extends Controller
     public function create()
     {
         //
-        $getSiswa = PesertaDidik::all();
-        $getJenisTransaksi = JenisTransaksi::all();
-        $getRombel = RombonganBelajar::all();
+        $getSiswa = PesertaDidik::orderBy('name', 'asc')->get();
+        $getJenisTransaksi = JenisTransaksi::orderBy('transaction_type', 'asc')->get();
+        $getRombel = RombonganBelajar::orderBy('created_at', 'desc')->get();
         return view('backend.senada.keuangan.pembayaran.add', compact('getSiswa', 'getRombel', 'getJenisTransaksi'));
     }
 
@@ -91,8 +91,8 @@ class PembayaranController extends Controller
         date_default_timezone_set('Asia/Jakarta');
 
         $idSchool = $request->school_id;
-        $nameSCH = ($idSchool == '1') ? 'TK' : 'SD';
-
+        $nameSCH = ($idSchool == '1') ? 'TK' : (($idSchool == '2') ? 'SD' : 'TPA');
+ 
         $pembayaran = Transaksi::where('school_id', $idSchool)->max('transaction_order');
 
         // Jika sudah ada nomor urut sebelumnya
@@ -302,8 +302,8 @@ class PembayaranController extends Controller
     {
         //
         $pembyarans = Transaksi::findOrFail($id);
-
         $pembyarans->delete();
+
         if ($pembyarans) {
             //redirect dengan pesan sukses
             return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Dihapus!']);

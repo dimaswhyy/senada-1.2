@@ -22,6 +22,7 @@
                             <label for="school_id">Sekolah</label>
                             <select name="school_id" class="form-control" id="school_id">
                                 <option>- Pilih Sekolah -</option>
+                                <option value="3">TPA</option>
                                 <option value="1">TK</option>
                                 <option value="2">SD</option>
                             </select>
@@ -51,6 +52,7 @@
                             <label for="class_id">Kelas</label>
                             <select name="class_id" class="form-control" id="class_id">
                                 <option>- Pilih Kelas -</option>
+                                <option>TPA</option>
                                 <option>TK A</option>
                                 <option>TK B1</option>
                                 <option>TK B2</option>
