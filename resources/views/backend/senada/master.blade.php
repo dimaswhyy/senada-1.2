@@ -269,7 +269,10 @@
                         data: 'transaction_type',
                         name: 'transaction_type'
                     },
-
+                    {
+                        data: 'transaction_month',
+                        name: 'transaction_month'
+                    },
                     {
                         data: 'transaction_via',
                         name: 'transaction_via'

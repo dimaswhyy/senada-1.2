@@ -20,6 +20,7 @@
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
                                 <th>Transaksi</th>
+                                <th>Bulan</th>
                                 <th>Melalui</th>
                                 <th>Keterangan</th>
                                 <th>Aksi</th>
