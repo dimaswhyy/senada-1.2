@@ -139,7 +139,7 @@
                                 Kel. Pondok Kelapa, Kec. Duren Sawit, Jakarta Timur
                             </p>
                             <p style="font-weight: reguler; font-size: 10px">
-                                No. Telp : 00000000000, Website : almanar.sch.id
+                                No. Telp : (021) 8690 0906, Website : almanar.sch.id
                             </p>
                         </div>
                     </td>
@@ -155,7 +155,8 @@
                                 Diberikan kepada :
                             </h4>
                             <p style="font-size: 12px">Nama : <b>{{ $pembayaran[0]->name }}</b>, Kelas :
-                                <b>{{ $pembayaran[0]->class_id }}</b></p>
+                                <b>{{ $pembayaran[0]->class_id }}</b>
+                            </p>
                             <p style="font-size: 12px">Nomor Transaksi :<b>{{ $pembayaran[0]->transaction_order }}</b>
                             </p>
                             <p style="font-size: 12px">Tanggal Transaksi :
@@ -228,7 +229,43 @@
                 <td style="width: 200px; text-align: right; border-right: none">
                     <p style="text-align: left">Rp {{ number_format($item->transaction_total, 2) }}</p>
                 </td>
-                <td colspan="5" style="border-left: none"></td>
+                <td style="width: 200px; text-align: right; border-right: none">
+                    <p style="text-align: left">
+                        <?php
+                        function terbilang1($angka1)
+                        {
+                            $angka1 = abs($angka1);
+                            $baca1 = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+                            $terbilang1 = '';
+                            if ($angka1 < 12) {
+                                $terbilang1 = ' ' . $baca1[$angka1];
+                            } elseif ($angka1 < 20) {
+                                $terbilang1 = terbilang1($angka1 - 10) . ' belas';
+                            } elseif ($angka1 < 100) {
+                                $terbilang1 = terbilang1($angka1 / 10) . ' puluh' . terbilang1($angka1 % 10);
+                            } elseif ($angka1 < 200) {
+                                $terbilang1 = ' seratus' . terbilang1($angka1 - 100);
+                            } elseif ($angka1 < 1000) {
+                                $terbilang1 = terbilang1($angka1 / 100) . ' ratus' . terbilang1($angka1 % 100);
+                            } elseif ($angka1 < 2000) {
+                                $terbilang1 = ' seribu' . terbilang1($angka1 - 1000);
+                            } elseif ($angka1 < 1000000) {
+                                $terbilang1 = terbilang1($angka1 / 1000) . ' ribu' . terbilang1($angka1 % 1000);
+                            } elseif ($angka1 < 1000000000) {
+                                $terbilang1 = terbilang1($angka1 / 1000000) . ' juta' . terbilang1($angka1 % 1000000);
+                            } elseif ($angka1 < 1000000000000) {
+                                $terbilang1 = terbilang1($angka1 / 1000000000) . ' miliar' . terbilang1($angka1 % 1000000000);
+                            } elseif ($angka1 < 1000000000000000) {
+                                $terbilang1 = terbilang1($angka1 / 1000000000000) . ' triliun' . terbilang1($angka1 % 1000000000000);
+                            }
+                            return $terbilang1;
+                        }
+                        
+                        echo "<em>" . terbilang1($item->transaction_total) . ' rupiah </em>';
+                        ?>
+                    </p>
+                </td>
+                {{-- <td colspan="5" style="border-left: none"></td> --}}
             </tr>
         </table>
 
@@ -237,7 +274,7 @@
                 <td>
                     <p style="margin: 0; text-align: center; font-size: 12px">
                         <br />
-                        Tata Usaha,
+                        Bag. Keuangan,
                         <br />
                         <br />
                         <br />
@@ -249,7 +286,8 @@
                 </td>
                 <td>
                     <p style="margin: 0; text-align: center; font-size: 12px">
-                        Jakarta, <?php setlocale(LC_TIME, 'id_ID'); echo strftime('%e %B %Y'); ?> <br />
+                        Jakarta, <?php setlocale(LC_TIME, 'id_ID');
+                        echo strftime('%e %B %Y'); ?> <br />
                         Penyetor,
                         <br />
                         <br />
@@ -271,12 +309,15 @@
                     </h4>
                     <p style="font-size: 12px">
                         1. Disimpan sebagai bukti pembayaran yang SAH. <br>
-                        2. Uang yang sudah dibayarkan tidak dapat diminta kembali.
+                        2. Uang yang sudah dibayarkan tidak dapat diminta kembali. <br>
+                        3. Jatuh tempo pembayaran paling lambat tanggal 10 setiap bulannya.
                     </p>
                 </td>
             </tr>
         </table>
     </section>
+
+    <hr style="border: 1px solid #000; margin: 10px 0;">
 
     <section class="main-pd-wrapper" style="width: 1000px; margin: auto">
         <div style="display: table-header-group">
@@ -309,7 +350,7 @@
                                 Kel. Pondok Kelapa, Kec. Duren Sawit, Jakarta Timur
                             </p>
                             <p style="font-weight: reguler; font-size: 10px">
-                                No. Telp : 00000000000, Website : almanar.sch.id
+                                No. Telp : (021) 8690 0906, Website : almanar.sch.id
                             </p>
                         </div>
                     </td>
@@ -325,7 +366,8 @@
                                 Diberikan kepada :
                             </h4>
                             <p style="font-size: 12px">Nama : <b>{{ $pembayaran[0]->name }}</b>, Kelas :
-                                <b>{{ $pembayaran[0]->class_id }}</b></p>
+                                <b>{{ $pembayaran[0]->class_id }}</b>
+                            </p>
                             <p style="font-size: 12px">Nomor Transaksi :<b>{{ $pembayaran[0]->transaction_order }}</b>
                             </p>
                             <p style="font-size: 12px">Tanggal Transaksi :
@@ -398,7 +440,43 @@
                 <td style="width: 200px; text-align: right; border-right: none">
                     <p style="text-align: left">Rp {{ number_format($item->transaction_total, 2) }}</p>
                 </td>
-                <td colspan="5" style="border-left: none"></td>
+                <td style="width: 200px; text-align: right; border-right: none">
+                    <p style="text-align: left">
+                        <?php
+                        function terbilang($angka)
+                        {
+                            $angka = abs($angka);
+                            $baca = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+                            $terbilang = '';
+                            if ($angka < 12) {
+                                $terbilang = ' ' . $baca[$angka];
+                            } elseif ($angka < 20) {
+                                $terbilang = terbilang($angka - 10) . ' belas';
+                            } elseif ($angka < 100) {
+                                $terbilang = terbilang($angka / 10) . ' puluh' . terbilang($angka % 10);
+                            } elseif ($angka < 200) {
+                                $terbilang = ' seratus' . terbilang($angka - 100);
+                            } elseif ($angka < 1000) {
+                                $terbilang = terbilang($angka / 100) . ' ratus' . terbilang($angka % 100);
+                            } elseif ($angka < 2000) {
+                                $terbilang = ' seribu' . terbilang($angka - 1000);
+                            } elseif ($angka < 1000000) {
+                                $terbilang = terbilang($angka / 1000) . ' ribu' . terbilang($angka % 1000);
+                            } elseif ($angka < 1000000000) {
+                                $terbilang = terbilang($angka / 1000000) . ' juta' . terbilang($angka % 1000000);
+                            } elseif ($angka < 1000000000000) {
+                                $terbilang = terbilang($angka / 1000000000) . ' miliar' . terbilang($angka % 1000000000);
+                            } elseif ($angka < 1000000000000000) {
+                                $terbilang = terbilang($angka / 1000000000000) . ' triliun' . terbilang($angka % 1000000000000);
+                            }
+                            return $terbilang;
+                        }
+                        
+                        echo "<em>" . terbilang1($item->transaction_total) . ' rupiah </em>';
+                        ?>
+                    </p>
+                </td>
+                {{-- <td colspan="5" style="border-left: none"></td> --}}
             </tr>
         </table>
 
@@ -407,7 +485,7 @@
                 <td>
                     <p style="margin: 0; text-align: center; font-size: 12px">
                         <br />
-                        Tata Usaha,
+                        Bag. Keuangan,
                         <br />
                         <br />
                         <br />
@@ -419,7 +497,8 @@
                 </td>
                 <td>
                     <p style="margin: 0; text-align: center; font-size: 12px">
-                        Jakarta, <?php setlocale(LC_TIME, 'id_ID'); echo strftime('%e %B %Y'); ?> <br />
+                        Jakarta, <?php setlocale(LC_TIME, 'id_ID');
+                        echo strftime('%e %B %Y'); ?> <br />
                         Penyetor,
                         <br />
                         <br />
@@ -441,7 +520,8 @@
                     </h4>
                     <p style="font-size: 12px">
                         1. Disimpan sebagai bukti pembayaran yang SAH. <br>
-                        2. Uang yang sudah dibayarkan tidak dapat diminta kembali.
+                        2. Uang yang sudah dibayarkan tidak dapat diminta kembali. <br>
+                        3. Jatuh tempo pembayaran paling lambat tanggal 10 setiap bulannya.
                     </p>
                 </td>
             </tr>
