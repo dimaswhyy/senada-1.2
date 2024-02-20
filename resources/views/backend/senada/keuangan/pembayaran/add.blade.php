@@ -132,7 +132,8 @@
                             <select name="transaction_via" class="form-control" id="transaction_via">
                                 <option>- Pilih -</option>
                                 <option>Tunai</option>
-                                <option>Transfer</option>
+                                <option>Transfer - BSI 7010198636</option>
+                                <option>Transfer - BRI 052801000014304</option>
                             </select>
                             @error('transaction_via')
                                 <div class="alert alert-danger mt-2">
