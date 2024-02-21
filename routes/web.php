@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\Keuangan\LaporanController;
 use App\Http\Controllers\Backend\Keuangan\PembayaranController;
+use App\Http\Controllers\Backend\Keuangan\TestimoniController;
 use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
 use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +34,11 @@ Route::resource('/rombongan-belajar', RombonganBelajarController::class);
 Route::resource('/jenis-transaksi', JenisTransaksiController::class);
 Route::resource('/pembayaran', PembayaranController::class);
 Route::get('/pembayaran/invoice/{id}', [App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'invoice'])->name('pembayaran.invoice');
+
+Route::get('/laporan/export-data-transaksi', [App\Http\Controllers\Backend\Keuangan\LaporanController::class, 'export'])->name('export.data');
+// kalo ada resource and lu mau add extends function lu add diatas resource
+Route::resource('/laporan', LaporanController::class);
+
+
+
 

@@ -107,7 +107,7 @@
         </ul>
       </li>
       <li class="menu-item {{Request::is('laporan')?'active':''}}">
-        <a href="#" class="menu-link">
+        <a href="{{ route('laporan.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-report"></i>
           <div data-i18n="Analytics">Laporan</div>
         </a>
