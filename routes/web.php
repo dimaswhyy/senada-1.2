@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
-use App\Http\Controllers\Backend\Keuangan\LaporanController;
-use App\Http\Controllers\Backend\Keuangan\PembayaranController;
-use App\Http\Controllers\Backend\Keuangan\TestimoniController;
-use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
-use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Keuangan\LaporanController;
+use App\Http\Controllers\Backend\Keuangan\TestimoniController;
+use App\Http\Controllers\Backend\Keuangan\PembayaranController;
+use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
+use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
     return view('home');
@@ -38,7 +43,5 @@ Route::get('/pembayaran/invoice/{id}', [App\Http\Controllers\Backend\Keuangan\Pe
 Route::get('/laporan/export-data-transaksi', [App\Http\Controllers\Backend\Keuangan\LaporanController::class, 'export'])->name('export.data');
 // kalo ada resource and lu mau add extends function lu add diatas resource
 Route::resource('/laporan', LaporanController::class);
-
-
 
 
