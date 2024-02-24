@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,31 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $input = $request->all();
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if(Auth::guard('account_super_admin')->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            return redirect('/dashboard');
+
+        // }elseif(Auth::guard('user')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+        //     return redirect('/dashboard');
+
+        // }elseif(Auth::guard('account_admin_gudep')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+        //     return redirect('/dashboard');
+
+        }else{
+            return redirect()->route('login')
+                ->with('error','Email dan Kata Sandi yang Anda Masukkan Salah!');
+        }
+
     }
 }

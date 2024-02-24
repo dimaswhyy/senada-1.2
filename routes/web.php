@@ -29,11 +29,16 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('/dashboard', DashboardController::class);
+Route::middleware('auth:account_super_admin')->group(function () {
+    route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+});
 
-//Tata Usaha
-Route::resource('/data-peserta-didik', PesertaDidikController::class);
-Route::resource('/rombongan-belajar', RombonganBelajarController::class);
+Route::middleware('auth:account_super_admin')->group(function () {
+    //Tata Usaha
+    Route::resource('/data-peserta-didik', PesertaDidikController::class);
+    Route::resource('/rombongan-belajar', RombonganBelajarController::class);
+});
+
 
 // Keuangan
 Route::resource('/jenis-transaksi', JenisTransaksiController::class);
@@ -43,5 +48,3 @@ Route::get('/pembayaran/invoice/{id}', [App\Http\Controllers\Backend\Keuangan\Pe
 Route::get('/laporan/export-data-transaksi', [App\Http\Controllers\Backend\Keuangan\LaporanController::class, 'export'])->name('export.data');
 // kalo ada resource and lu mau add extends function lu add diatas resource
 Route::resource('/laporan', LaporanController::class);
-
-
