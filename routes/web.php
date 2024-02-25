@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\Keuangan\TestimoniController;
 use App\Http\Controllers\Backend\Keuangan\PembayaranController;
 use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\SuperAdmin\AkunSekolahController;
 use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
 
 /*
@@ -32,6 +33,9 @@ Route::get('/', function () {
 Route::middleware('auth:account_super_admin')->group(function () {
     route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });
+
+//Super Admin
+Route::resource('/akun-sekolah', AkunSekolahController::class);
 
 Route::middleware('auth:account_super_admin')->group(function () {
     //Tata Usaha
