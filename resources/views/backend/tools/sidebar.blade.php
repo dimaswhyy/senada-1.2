@@ -22,17 +22,12 @@
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+      
       {{-- Super Admin --}}
-      {{-- @if (Str::length(Auth::guard('account_yayasan')->user()) > 0)
-      @if (Auth::guard('account_yayasan')->user()->role_id == 1)
+      @if (Str::length(Auth::guard('account_super_admin')->user()) > 0)
+      @if (Auth::guard('account_super_admin')->user()->role_id == 1)
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Yayasan</span>
-      </li>
-      <li class="menu-item {{Request::is('profilyayasan')?'active':''}}">
-        <a href="{{route('profilyayasan.index')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-school"></i>
-          <div data-i18n="Analytics">Profil Yayasan</div>
-        </a>
+        <span class="menu-header-text">Super Admin</span>
       </li>
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -40,20 +35,15 @@
           <div data-i18n="Account Settings">Kelola</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{Request::is('unit')?'active':''}}">
-            <a href="{{route('unit.index')}}" class="menu-link">
-              <div data-i18n="Account">Unit</div>
-            </a>
-          </li>
-          <li class="menu-item {{Request::is('unitaccount')?'active':''}}">
-            <a href="{{route('unitaccount.index')}}" class="menu-link">
-              <div data-i18n="Notifications">Akun</div>
+          <li class="menu-item {{Request::is('akun-sekolah')?'active':''}}">
+            <a href="{{route('akun-sekolah.index')}}" class="menu-link">
+              <div data-i18n="Notifications">Akun Sekolah</div>
             </a>
           </li>
         </ul>
       </li>
       @endif
-      @endif --}}
+      @endif
 
       {{-- Administrasi --}}
       {{-- @if (Str::length(Auth::guard('unit_account')->user()) > 0)

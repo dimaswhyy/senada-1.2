@@ -12,6 +12,10 @@ class AccountSekolah extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $incrementing = false;
+    // protected $table = 'account_admin_gudeps';
+    protected $primaryKey="id";
+
     /**
      * The attributes that are mass assignable.
      *
