@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend\PesertaDidik;
 
-use datatables;
+use Yajra\DataTables\DataTables;
 use App\Models\Transaksi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class PembayaranPesertaDidikController extends Controller
         if ($request->ajax()) {
 
             $data = Transaksi::where('student_id','=',Auth::User()->id)->leftjoin('peserta_didiks', 'transaksis.student_id', '=', 'peserta_didiks.id')->select('transaksis.id', 'peserta_didiks.name', 'transaksis.*', 'transaksis.created_at')->latest()->get();
-            dd($data);
+            // dd($data);
 
             return datatables::of($data)
                 ->addIndexColumn()
@@ -53,8 +53,7 @@ class PembayaranPesertaDidikController extends Controller
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href=' . route("pembayaran-peserta-didik.edit", $row->id) . '><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <a class="dropdown-item" href='.route("pembayaran-peserta-didik.invoice", $row->transaction_order).'><i class="bx bx-printer me-1"></i> Cetak</a>
-                          <form action="' . route('pembayaran-peserta-didik.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Beneran nih mau di hapus ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
+                          <a href='.route("pembayaran-peserta-didik.destroy", $row->id).' class="dropdown-item" data-confirm-delete="true"><i class="bx bx-trash me-1"></i> Hapus</a>
                         </div>
                         </div>';
                     $btn = $dropBtn;
@@ -64,6 +63,11 @@ class PembayaranPesertaDidikController extends Controller
                 ->make(true);
         }
 
+        $title = 'Hapus';
+        $text = "Yakin ingin dihapus ?";
+        confirmDelete($title, $text);
+
+        // <a class="dropdown-item" href='.route("pembayaran-peserta-didik.invoice", $row->transaction_order).'><i class="bx bx-printer me-1"></i> Cetak</a>
         return view('backend.senada.pesertadidik.pembayaran_peserta_didik.list');
     }
 
