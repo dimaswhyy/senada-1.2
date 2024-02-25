@@ -51,7 +51,7 @@ class AkunSekolahController extends Controller
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href='.route("akun-sekolah.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
-                          <form action="' . route('akun-sekolah.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" data-confirm-delete="true"><i class="bx bx-trash me-1"></i> Hapus</button></form>
+                          <a href='.route("akun-sekolah.destroy", $row->id).' class="dropdown-item" data-confirm-delete="true"><i class="bx bx-trash me-1"></i> Hapus</a>
                         </div>
                         </div>';
                     $btn = $dropBtn;
@@ -133,7 +133,23 @@ class AkunSekolahController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $akunsekolahs = AccountSekolah::findOrFail($id);
 
+        $akunsekolahs->update([
+            'name'     => $request->name,
+            'gender'     => $request->gender,
+            'role_id'     => $request->role_id,
+            'email'     => $request->email,
+            'password'     => Hash::make($request->password)
+        ]);
+
+        if ($akunsekolahs) {
+            //redirect dengan pesan sukses
+            return redirect()->route('akun-sekolah.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('akun-sekolah.edit')->with(['error' => 'Data Gagal Diubah!']);
+        }
     }
 
     /**
@@ -142,5 +158,15 @@ class AkunSekolahController extends Controller
     public function destroy(string $id)
     {
         //
+        $akunsekolahs = AccountSekolah::findorfail($id);
+        $akunsekolahs->delete();
+        
+        if($akunsekolahs){
+            //redirect dengan pesan sukses
+            return redirect()->route('akun-sekolah.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('akun-sekolah.edit')->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
 }

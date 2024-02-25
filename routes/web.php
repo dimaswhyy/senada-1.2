@@ -34,8 +34,10 @@ Route::middleware('auth:account_super_admin')->group(function () {
     route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 });
 
-//Super Admin
-Route::resource('/akun-sekolah', AkunSekolahController::class);
+Route::middleware('auth:account_super_admin')->group(function () {
+    //Super Admin
+    Route::resource('/akun-sekolah', AkunSekolahController::class);
+});
 
 Route::middleware('auth:account_super_admin')->group(function () {
     //Tata Usaha
