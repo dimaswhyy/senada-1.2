@@ -37,22 +37,22 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    {{-- <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                     <small class="text-muted">
                                         @if (auth()->user()->role_id == 1)
-                                            <span>Yayasan</span>
+                                            <span>Super Admin</span>
                                         @elseif(auth()->user()->role_id == 2)
-                                            <span>Tata Usaha</span>
+                                            <span>Yayasan</span>
                                         @elseif(auth()->user()->role_id == 3)
-                                            <span>Keuangan</span>
+                                            <span>Tata Usaha</span>
                                         @elseif(auth()->user()->role_id == 4)
-                                            <span>Perpustakaan</span>
+                                            <span>Keuangan</span>
                                         @elseif(auth()->user()->role_id == 5)
                                             <span>Guru</span>
                                         @else
                                             <span>Siswa</span>
                                         @endif
-                                    </small> --}}
+                                    </small>
                                 </div>
                             </div>
                         </a>
