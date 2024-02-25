@@ -40,10 +40,20 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        
+
         'account_super_admin' => [
             'driver' => 'session',
             'provider' => 'account_super_admins',
+        ],
+
+        'account_sekolah' => [
+            'driver' => 'session',
+            'provider' => 'account_sekolahs',
+        ],
+
+        'peserta_didik' => [
+            'driver' => 'session',
+            'provider' => 'peserta_didiks',
         ],
     ],
 
@@ -73,6 +83,16 @@ return [
         'account_super_admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\AccountSuperAdmin::class,
+        ],
+
+        'account_sekolahs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AccountSekolah::class,
+        ],
+
+        'peserta_didiks' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\PesertaDidik::class,
         ],
 
         // 'users' => [

@@ -242,7 +242,7 @@
                                         kapal yang bisa berlayar di atas daratan kering.</p>
 
                                     <div class="class">
-                                        <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Masuk Sekarang</a>
+                                        <a href="{{ route('login') }}" class="btn btn-primary">Masuk Sekarang</a>
                                         {{-- {{route('login')}} --}}
                                     </div>
                                 </div>

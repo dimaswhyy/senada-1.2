@@ -25,7 +25,9 @@ class DashboardController extends Controller
             ->sum();
 
         // Hitung Total Keuangan Masih Belum Berdasarkan transaction_order yang tidak sama
-        $totalKeuangan = Transaksi::selectRaw('SUM(transaction_total) as total')->sum('transaction_total');
+        $totalKeuangan = Transaksi::selectRaw('SUM(sub.total) as total')
+            ->from(Transaksi::raw("(SELECT DISTINCT transaction_order, transaction_total as total FROM transaksis) as sub"))
+            ->first()->total;
 
         // Menghitung jumlah transaksi per order berdasarkan tanggal hari ini Masih Belum Berdasrakan transaction_order yang tidak sama 
         $jumlahTransaksiPerOrder = Transaksi::whereDate('transaction_date', $today)->count();

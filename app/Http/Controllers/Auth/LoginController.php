@@ -53,11 +53,11 @@ class LoginController extends Controller
         {
             return redirect('/dashboard');
 
-        // }elseif(Auth::guard('user')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
-        //     return redirect('/dashboard');
+        }else if(Auth::guard('account_sekolah')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+            return redirect('/dashboard');
 
-        // }elseif(Auth::guard('account_admin_gudep')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
-        //     return redirect('/dashboard');
+        }else if(Auth::guard('peserta_didik')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+            return redirect('/dashboard');
 
         }else{
             return redirect()->route('login')

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SuperAdmin
+class TataUsaha
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class SuperAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role_id == 1) {
+        if (auth()->user()->role_id == 3) {
             return $next($request);
         }
 
