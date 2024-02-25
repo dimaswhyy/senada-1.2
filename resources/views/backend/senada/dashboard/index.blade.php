@@ -52,13 +52,13 @@
         </div>
 
         @php
+            $isCheck = false; // Inisialisasi variabel $isCheck di luar blok if-elseif
             if (Str::length(Auth::guard('account_sekolah')->user()) > 0) {
                 $isRole = Auth::guard('account_sekolah')->user()->role_id == 4;
-                $isCheck = Str::length(Auth::guard('account_sekolah')->user()) > 0;
-            }
-            if (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
+                $isCheck = true; // Atur $isCheck ke true jika akun sekolah ditemukan
+            } elseif (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
                 $isRole = Auth::guard('account_super_admin')->user()->role_id == 1;
-                $isCheck = Str::length(Auth::guard('account_super_admin')->user()) > 0;
+                $isCheck = true; // Atur $isCheck ke true jika akun super admin ditemukan
             }
         @endphp
 
@@ -104,7 +104,7 @@
                                             <img src="{{ asset('assets/backend/img/icons/unicons/paypal.png') }}"
                                                 alt="Credit Card" class="rounded" />
                                         </div>
-                                    </div> 
+                                    </div>
                                     <span class="d-block mb-1">Total Keuangan</span>
                                     <h6 class="card-title mb-2">Rp {{ number_format($totalKeuangan, 2) }}</h6>
                                 </div>
