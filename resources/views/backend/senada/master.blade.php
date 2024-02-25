@@ -434,6 +434,74 @@
                 table.draw();
             });
 
+            //Peserta Didik Data Table
+            //Pembayaran Peserta Didik
+            // Datatable Pembayaran
+            var table = $('.data-table-pembayaran-peserta-didik').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('pembayaran-peserta-didik.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'transaction_order',
+                        name: 'transaction_order'
+                    },
+                    {
+                        data: 'name',
+                        name: 'peserta_didiks.name'
+                    },
+                    {
+                        data: 'class_id',
+                        name: 'class_id'
+                    },
+                    {
+                        data: 'transaction_type',
+                        name: 'transaction_type'
+                    },
+                    {
+                        data: 'transaction_month',
+                        name: 'transaction_month'
+                    },
+                    {
+                        data: 'transaction_via',
+                        name: 'transaction_via'
+                    },
+                    {
+                        data: 'information',
+                        name: 'information',
+                        render: function(data, type, row, meta) {
+                            if (data == 'Disetujui') {
+                                console.log(data);
+                                return '<span class="badge bg-label-success me-1">Disetujui</span>';
+                            } else if (data == 'Dalam Antrian') {
+                                return '<span class="badge bg-label-warning me-1">Dalam Antrian</span>';
+                            } else {
+                                return '<span class="badge bg-label-danger me-1">Ditolak</span>';
+                            }
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
+
         });
     </script>
   

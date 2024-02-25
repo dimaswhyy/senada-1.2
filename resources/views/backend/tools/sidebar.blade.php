@@ -47,16 +47,15 @@
 
         {{-- Tata Usaha --}}
         @php
+            $isCheck = false; // Inisialisasi variabel $isCheck di luar blok if-elseif
             if (Str::length(Auth::guard('account_sekolah')->user()) > 0) {
                 $isRole = Auth::guard('account_sekolah')->user()->role_id == 3;
-                $isCheck = Str::length(Auth::guard('account_sekolah')->user()) > 0;
-            }
-            if (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
+                $isCheck = true; // Atur $isCheck ke true jika akun sekolah ditemukan
+            } elseif (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
                 $isRole = Auth::guard('account_super_admin')->user()->role_id == 1;
-                $isCheck = Str::length(Auth::guard('account_super_admin')->user()) > 0;
+                $isCheck = true; // Atur $isCheck ke true jika akun super admin ditemukan
             }
         @endphp
-
         @if ($isCheck)
             @if ($isRole)
                 <li class="menu-header small text-uppercase">
@@ -85,13 +84,13 @@
 
         {{-- Keuangan --}}
         @php
+            $isCheck = false; // Inisialisasi variabel $isCheck di luar blok if-elseif
             if (Str::length(Auth::guard('account_sekolah')->user()) > 0) {
                 $isRole = Auth::guard('account_sekolah')->user()->role_id == 4;
-                $isCheck = Str::length(Auth::guard('account_sekolah')->user()) > 0;
-            }
-            if (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
+                $isCheck = true; // Atur $isCheck ke true jika akun sekolah ditemukan
+            } elseif (Str::length(Auth::guard('account_super_admin')->user()) > 0) {
                 $isRole = Auth::guard('account_super_admin')->user()->role_id == 1;
-                $isCheck = Str::length(Auth::guard('account_super_admin')->user()) > 0;
+                $isCheck = true; // Atur $isCheck ke true jika akun super admin ditemukan
             }
         @endphp
         @if ($isCheck)
@@ -127,135 +126,24 @@
         @endif
 
         <!-- Siswa -->
-        {{-- @if (Str::length(Auth::guard('user')->user()) > 0)
-      @if (Auth::guard('user')->user()->role_id == 6)
-      <li class="menu-header small text-uppercase"><span class="menu-header-text">Siswa</span></li>
-      <!-- Profil -->
-      <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-user"></i>
-          <div data-i18n="Basic">Profil</div>
-        </a>
-      </li>
-      <!-- Pembayaran -->
-      <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-wallet-alt"></i>
-          <div data-i18n="Basic">Pembayaran</div>
-        </a>
-      </li> --}}
-        <!-- Pembayaran -->
-        {{-- <li class="menu-item">
-        <a href="cards-basic.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-collection"></i>
-          <div data-i18n="Basic">Pembayaran</div>
-        </a>
-      </li> --}}
-        <!-- Nilai Coming Soon -->
-        {{-- <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-box"></i>
-          <div data-i18n="User interface">Konfirmasi Pembayaran</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="ui-accordion.html" class="menu-link">
-              <div data-i18n="Accordion">Accordion</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-alerts.html" class="menu-link">
-              <div data-i18n="Alerts">Alerts</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-badges.html" class="menu-link">
-              <div data-i18n="Badges">Badges</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-buttons.html" class="menu-link">
-              <div data-i18n="Buttons">Buttons</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-carousel.html" class="menu-link">
-              <div data-i18n="Carousel">Carousel</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-collapse.html" class="menu-link">
-              <div data-i18n="Collapse">Collapse</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-dropdowns.html" class="menu-link">
-              <div data-i18n="Dropdowns">Dropdowns</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-footer.html" class="menu-link">
-              <div data-i18n="Footer">Footer</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-list-groups.html" class="menu-link">
-              <div data-i18n="List Groups">List groups</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-modals.html" class="menu-link">
-              <div data-i18n="Modals">Modals</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-navbar.html" class="menu-link">
-              <div data-i18n="Navbar">Navbar</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-offcanvas.html" class="menu-link">
-              <div data-i18n="Offcanvas">Offcanvas</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-pagination-breadcrumbs.html" class="menu-link">
-              <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-progress.html" class="menu-link">
-              <div data-i18n="Progress">Progress</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-spinners.html" class="menu-link">
-              <div data-i18n="Spinners">Spinners</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-tabs-pills.html" class="menu-link">
-              <div data-i18n="Tabs &amp; Pills">Tabs &amp; Pills</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-toasts.html" class="menu-link">
-              <div data-i18n="Toasts">Toasts</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-tooltips-popovers.html" class="menu-link">
-              <div data-i18n="Tooltips & Popovers">Tooltips &amp; popovers</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="ui-typography.html" class="menu-link">
-              <div data-i18n="Typography">Typography</div>
-            </a>
-          </li>
-        </ul>
-      </li> --}}
-        {{-- @endif
-      @endif --}}
+        @if (Str::length(Auth::guard('peserta_didik')->user()) > 0)
+            @if (Auth::guard('peserta_didik')->user()->role_id == 6)
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Peserta Didik</span></li>
+                <!-- Profil -->
+                {{-- <li class="menu-item">
+                    <a href="cards-basic.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-user"></i>
+                        <div data-i18n="Basic">Profil</div>
+                    </a>
+                </li> --}}
+                <!-- Pembayaran -->
+                <li class="menu-item {{ Request::is('laporan') ? 'active' : '' }}">
+                    <a href="{{ route('pembayaran-peserta-didik.index') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-wallet-alt"></i>
+                        <div data-i18n="Basic">Pembayaran</div>
+                    </a>
+                </li>
+            @endif
+        @endif
     </ul>
 </aside>

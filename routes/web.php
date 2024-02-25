@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\Keuangan\TestimoniController;
 use App\Http\Controllers\Backend\Keuangan\PembayaranController;
 use App\Http\Controllers\Backend\TataUsaha\PesertaDidikController;
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
+use App\Http\Controllers\Backend\PesertaDidik\PembayaranPesertaDidikController;
 use App\Http\Controllers\Backend\SuperAdmin\AkunSekolahController;
 use App\Http\Controllers\Backend\TataUsaha\RombonganBelajarController;
 
@@ -53,4 +54,9 @@ Route::middleware('auth:account_super_admin,account_sekolah')->group(function ()
     Route::resource('/jenis-transaksi', JenisTransaksiController::class);
     Route::resource('/pembayaran', PembayaranController::class);
     Route::resource('/laporan', LaporanController::class);
+});
+
+Route::middleware('auth:peserta_didik')->group(function () {
+    //Peserta Didik
+    Route::resource('/pembayaran-peserta-didik', PembayaranPesertaDidikController::class);
 });
